@@ -28,9 +28,9 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return await _houseDbContext.Motels.Include(x => x.HouseOwner).ToListAsync();
         }
 
-        public async Task<Motel?> GetMotelByIdAsync(Guid id)
+        public Motel? GetMotelByIdAsync(Guid id)
         {
-            return await _houseDbContext.Motels.Include(x => x.HouseOwner).Where(x => x.IdMotel.Equals(id)).SingleOrDefaultAsync();
+            return _houseDbContext.Motels.Include(x => x.HouseOwner).Where(x => x.IdMotel.Equals(id)).FirstOrDefault();
         }
 
         public Task UpdateMotelAsync(Motel motel)

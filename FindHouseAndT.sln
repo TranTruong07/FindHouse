@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.API", "FindHo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.Models", "FindHouseAndT.Models\FindHouseAndT.Models.csproj", "{5BEDE580-C1B5-4949-995D-108EDD0E8343}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindHouseAndT.Infrastructure", "FindHouseAndT.Infrastructure\FindHouseAndT.Infrastructure.csproj", "{F0BF0DF0-0508-45BE-86BB-1B74D5C1BF6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.Infrastructure", "FindHouseAndT.Infrastructure\FindHouseAndT.Infrastructure.csproj", "{F0BF0DF0-0508-45BE-86BB-1B74D5C1BF6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindHouseAndT.Application", "FindHouseAndT.Application\FindHouseAndT.Application.csproj", "{9C6D6A62-05BF-4A91-B0EC-C505137380E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.Application", "FindHouseAndT.Application\FindHouseAndT.Application.csproj", "{9C6D6A62-05BF-4A91-B0EC-C505137380E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindHouseAndT.WebApp", "FindHouseAndT.WebApp\FindHouseAndT.WebApp.csproj", "{4917602E-D349-4657-BD02-1D536324DDE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9C6D6A62-05BF-4A91-B0EC-C505137380E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C6D6A62-05BF-4A91-B0EC-C505137380E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C6D6A62-05BF-4A91-B0EC-C505137380E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4917602E-D349-4657-BD02-1D536324DDE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4917602E-D349-4657-BD02-1D536324DDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4917602E-D349-4657-BD02-1D536324DDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4917602E-D349-4657-BD02-1D536324DDE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

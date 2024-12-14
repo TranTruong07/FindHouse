@@ -1,12 +1,8 @@
 ﻿using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Application.UseCase.Interface.HouseOwner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FindHouseAndT.Models.Entities;
 
-namespace FindHouseAndT.Application.UseCase.Implement.HouseOwner
+namespace FindHouseAndT.Application.UseCase
 {
     public class RegisHouseOwnerUseCase : IRegisHouseOwnerUseCase
     {
@@ -16,7 +12,7 @@ namespace FindHouseAndT.Application.UseCase.Implement.HouseOwner
             this.repository = repository;
         }
 
-        public async Task<bool> ExecuteAsync(Models.Entities.HouseOwner houseOwner)
+        public async Task<bool> ExecuteAsync(HouseOwner houseOwner)
         {
             await repository.CreateHouseOwnerAsync(houseOwner);
             return true;

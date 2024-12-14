@@ -11,6 +11,8 @@ namespace FindHouseAndT.Infrastructure.Data.UnitOfWork
         public IMotelRepository MotelRepository { get; set; }
         public IOrderRepository OrderRepository { get; set; }
         public IRoomRepository RoomRepository { get; set; }
+        public IUserAppRepository UserAppRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private FindHouseDbContext context;
 
         public UnitOfWork(ICustomerRepository customerRepository, IHouseOwnerRepository houseOwnerRepository, IMotelRepository motelRepository, IOrderRepository orderRepository, IRoomRepository roomRepository, FindHouseDbContext context)
