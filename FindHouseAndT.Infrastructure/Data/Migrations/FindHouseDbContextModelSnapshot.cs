@@ -257,6 +257,20 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cd03f5c2-7993-45ff-8fd5-d908649d2e56"),
+                            Name = "Landlord",
+                            NormalizedName = "LANDLORD"
+                        },
+                        new
+                        {
+                            Id = new Guid("f80df872-715b-49af-bf57-65ebf5ef6c11"),
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
