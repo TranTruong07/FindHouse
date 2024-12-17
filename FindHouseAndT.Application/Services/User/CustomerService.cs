@@ -8,20 +8,16 @@ namespace FindHouseAndT.Application.Services
     public class CustomerService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRegisUserAppUseCase _regisUserAppUseCase;
         private readonly IRegisCustomerUseCase _regisCustomerUseCase;
 
-        public CustomerService(IUnitOfWork unitOfWork, IRegisUserAppUseCase userAppUseCase, IRegisCustomerUseCase regisCustomerUseCase)
+        public CustomerService(IUnitOfWork unitOfWork, IRegisCustomerUseCase regisCustomerUseCase)
         {
             _unitOfWork = unitOfWork;
-            _regisUserAppUseCase = userAppUseCase;
             _regisCustomerUseCase = regisCustomerUseCase;
         }
 
-        public async Task<bool> Register(UserApp userApp, Customer customer)
+        public async Task<bool> Register(Customer customer)
         {
-            await _regisUserAppUseCase.ExecuteAsync(userApp);
-            await _unitOfWork.CommitAsync();
             await _regisCustomerUseCase.ExecuteAsync(customer);
             await _unitOfWork.CommitAsync();
             return true;

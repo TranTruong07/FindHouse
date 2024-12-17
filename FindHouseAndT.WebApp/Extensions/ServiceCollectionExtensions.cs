@@ -22,6 +22,7 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
 
             services.AddScoped<MotelService>();
+            services.AddScoped<CustomerService>();
 
             //repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();
