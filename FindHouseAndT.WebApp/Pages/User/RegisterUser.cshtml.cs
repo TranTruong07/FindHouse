@@ -27,13 +27,16 @@ namespace FindHouseAndT.WebApp.Pages
 			_signInManager = signInManager;
 		}
 
-		public void OnGet()
+		public async Task OnGetAsync()
 		{
+			LoginDTO.Schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
 		}
 
 		public async Task<IActionResult> OnPostRegisterAsync()
 		{
-			if (ModelState.IsValid)
+			ModelState.Clear();
+
+			if (TryValidateModel(RegisterDTO, nameof(RegisterDTO)))
 			{
 				var result1 = await _userManager.FindByEmailAsync(RegisterDTO.Email);
 				if (result1 != null)
@@ -51,7 +54,7 @@ namespace FindHouseAndT.WebApp.Pages
 					var custom = new Customer()
 					{
 						Name = RegisterDTO.FullName,
-						BirthDate = RegisterDTO.BirthDate.ToDateTime(TimeOnly.MinValue),
+						BirthDate = RegisterDTO.BirthDate,
 					};
 					var result2 = await _userManager.CreateAsync(user, RegisterDTO.Password);
 					if (result2.Succeeded)
@@ -109,6 +112,18 @@ namespace FindHouseAndT.WebApp.Pages
 				
             }
 			return Page();
+		}
+		[BindProperty]
+		public string Provider {  get; set; } = string.Empty;
+		public IActionResult OnPostExternalLogin()
+		{
+			if(Provider == null)
+			{
+				return Page();
+			}
+			var redirect = Url.Page("/User/ExternalLoginCallBack");
+			var property = _signInManager.ConfigureExternalAuthenticationProperties(Provider, redirect);
+			return new ChallengeResult(Provider, property);
 		}
 	}
 }

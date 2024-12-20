@@ -10,7 +10,7 @@ namespace FindHouseAndT.Models.Entities
     {
         public Guid IdUser { get; set; }
         public required string Name { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateOnly? BirthDate { get; set; }
         public string? Avatar {  get; set; }
         public UserApp? UserApp { get; set; }
         public ICollection<Order> Orders { get; set; } = new List<Order>();

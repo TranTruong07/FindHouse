@@ -20,25 +20,22 @@
 			<!-- Pills content -->
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+					<div class="text-center mb-3">
+						<p>Sign in with:</p>
+						<form asp-page-handler="ExternalLogin" method="post">
+						@if (Model.LoginDTO.Schemes.Count() > 0)
+						{
+							@foreach (var provider in Model.LoginDTO.Schemes)
+							{
+								<button  type="submit" name="Provider" value="@provider.Name" title="Login using abc @provider.Name Account" class="btn btn-link mx-1">
+									<span class="ms-2 fs-6">@provider.DisplayName</span>
+								</button>
+							}
+						}
+						</form>
+					</div>
 					<form asp-page-handler="Login" method="post">
-						<div class="text-center mb-3">
-							<p>Sign in with:</p>
-							<button type="button" class="btn btn-link mx-1">
-								<i class="fab fa-facebook-f"></i>
-							</button>
-
-							<button type="button" class="btn btn-link mx-1">
-								<i class="fab fa-google"></i>
-							</button>
-
-							<button type="button" class="btn btn-link mx-1">
-								<i class="fab fa-twitter"></i>
-							</button>
-
-							<button type="button" class="btn btn-link mx-1">
-								<i class="fab fa-github"></i>
-							</button>
-						</div>
+						
 
 						<p class="text-center">or:</p>
 						<div asp-validation-summary="All" class="text-danger"></div>
