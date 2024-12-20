@@ -20,7 +20,7 @@
 			<!-- Pills content -->
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-					<form>
+					<form asp-page-handler="Login" method="post">
 						<div class="text-center mb-3">
 							<p>Sign in with:</p>
 							<button type="button" class="btn btn-link mx-1">
@@ -41,17 +41,19 @@
 						</div>
 
 						<p class="text-center">or:</p>
-
+						<div asp-validation-summary="All" class="text-danger"></div>
 						<!-- Email input -->
 						<div class="form-group mb-4">
-							<input type="email" id="loginName" class="form-control" />
-							<label class="form-label" for="loginName">Email or username</label>
+							<label asp-for="LoginDTO.Email" class="form-label"></label>
+							<input asp-for="LoginDTO.Email" class="form-control" />
+							<span asp-validation-for="LoginDTO.Email" class="text-danger"></span>
 						</div>
 
 						<!-- Password input -->
 						<div class="form-group mb-4">
-							<input type="password" id="loginPassword" class="form-control" />
-							<label class="form-label" for="loginPassword">Password</label>
+							<label asp-for="LoginDTO.Password" class="form-label"></label>
+							<input asp-for="LoginDTO.Password" class="form-control" />
+							<span asp-validation-for="LoginDTO.Password" class="text-danger"></span>
 						</div>
 
 						<!-- 2 column grid layout -->
@@ -80,7 +82,8 @@
 					</form>
 				</div>
 				<div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-					<form method="post">
+					<form asp-page-handler="Register" method="post">
+						<div asp-validation-summary="All" class="text-danger"></div>
 						<div class="text-center mb-3">
 							<p>Sign up with:</p>
 							<button type="button" class="btn btn-link mx-1">

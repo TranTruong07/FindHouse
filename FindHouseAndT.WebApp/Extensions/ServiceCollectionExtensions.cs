@@ -5,8 +5,10 @@ using FindHouseAndT.Application.UseCase;
 using FindHouseAndT.Application.UseCase.Interface.Customer;
 using FindHouseAndT.Application.UseCase.Interface.HouseOwner;
 using FindHouseAndT.Application.UseCase.Interface.UserApp;
+using FindHouseAndT.Infrastructure.Data.MailService;
 using FindHouseAndT.Infrastructure.Data.Repositories;
 using FindHouseAndT.Infrastructure.Data.UnitOfWork;
+using FindHouseAndT.Models.MailKit;
 
 namespace FindHouseAndT.WebApp.Extensions
 {
@@ -23,6 +25,7 @@ namespace FindHouseAndT.WebApp.Extensions
 
             services.AddScoped<MotelService>();
             services.AddScoped<CustomerService>();
+            services.AddTransient<IMailService, MailService>();
 
             //repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();

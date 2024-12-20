@@ -1,6 +1,7 @@
 using FindHouseAndT.Infrastructure.Data.AppDbContext;
 using FindHouseAndT.Infrastructure.Data.SeedData;
 using FindHouseAndT.Models.Entities;
+using FindHouseAndT.Models.MailKit;
 using FindHouseAndT.WebApp.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,11 +23,27 @@ namespace FindHouseAndT.WebApp
             builder.Services.AddIdentity<UserApp, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<FindHouseDbContext>()
             .AddDefaultTokenProviders();
-            builder.Services.AddCustomService();
-            var app = builder.Build();
+			// Setting mail service
+			var mailSetting = builder.Configuration.GetSection("MailSettings");
+			builder.Services.Configure<MailSetting>(mailSetting);
+			// Add Custom DI Config
+			builder.Services.AddCustomService();
 
-            // Seed data Identity
-            using (var scop = app.Services.CreateScope())
+			//Login External
+			builder.Services.AddAuthentication().AddGoogle(option =>
+			{
+				option.ClientId = builder.Configuration["Authen:Google:ClientId"];
+				option.ClientSecret = builder.Configuration["Authen:Google:ClientSecret"];
+			});
+			builder.Services.AddAuthentication().AddFacebook(option =>
+			{
+				option.AppId = builder.Configuration["Authen:Facebook:AppId"];
+				option.AppSecret = builder.Configuration["Authen:Facebook:AppSecret"];
+			});
+
+			var app = builder.Build();
+			// Seed data Identity
+			using (var scop = app.Services.CreateScope())
             {
                 var service = scop.ServiceProvider;
                 var context = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
