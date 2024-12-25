@@ -87,13 +87,16 @@
 								@if (signInManager.IsSignedIn(User))
 								{
 									<div class="book_btn d-none d-lg-block">
-										<a href="#">User</a>
+										<a asp-page="User/ProfileUser">User</a>
+									</div>
+									<div class="book_btn d-none d-lg-block">
+										<a asp-page="User/UserManager" asp-page-handler="SignOut">Sign Out</a>
 									</div>
 								}
 								else
 								{
 									<div class="book_btn d-none d-lg-block">
-										<a asp-page="User/RegisterUser">Login/Register</a>
+										<a asp-page="User/UserManager">Login/Register</a>
 									</div>
 								}
 

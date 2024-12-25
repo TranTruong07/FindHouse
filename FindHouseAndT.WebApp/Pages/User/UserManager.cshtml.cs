@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FindHouseAndT.WebApp.Pages
 {
-	public class RegisterUserModel : PageModel
+	public class UserManagerModel : PageModel
 	{
 		[BindProperty]
 		public RegisterDTO RegisterDTO { get; set; } = new RegisterDTO();
@@ -19,7 +19,7 @@ namespace FindHouseAndT.WebApp.Pages
 		private readonly CustomerService _customerService;
 		private readonly IMailService _mailService;
 		private readonly SignInManager<UserApp> _signInManager;
-		public RegisterUserModel(UserManager<UserApp> userManager, CustomerService customerService, IMailService mailService, SignInManager<UserApp> signInManager)
+		public UserManagerModel(UserManager<UserApp> userManager, CustomerService customerService, IMailService mailService, SignInManager<UserApp> signInManager)
 		{
 			_userManager = userManager;
 			_customerService = customerService;
@@ -124,6 +124,12 @@ namespace FindHouseAndT.WebApp.Pages
 			var redirect = Url.Page("/User/ExternalLoginCallBack");
 			var property = _signInManager.ConfigureExternalAuthenticationProperties(Provider, redirect);
 			return new ChallengeResult(Provider, property);
+		}
+		public async Task<IActionResult> OnGetSignOutAsync()
+		{
+			LoginDTO.Schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
+			await _signInManager.SignOutAsync();
+			return RedirectToPage("/User/UserManager");
 		}
 	}
 }

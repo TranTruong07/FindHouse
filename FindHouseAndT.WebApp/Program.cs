@@ -1,3 +1,4 @@
+using Amazon.S3;
 using FindHouseAndT.Infrastructure.Data.AppDbContext;
 using FindHouseAndT.Infrastructure.Data.SeedData;
 using FindHouseAndT.Models.Entities;
@@ -40,6 +41,10 @@ namespace FindHouseAndT.WebApp
 				option.AppId = builder.Configuration["Authen:Facebook:AppId"];
 				option.AppSecret = builder.Configuration["Authen:Facebook:AppSecret"];
 			});
+
+            // AWS Configure
+            builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+            builder.Services.AddAWSService<IAmazonS3>();
 
 			var app = builder.Build();
 			// Seed data Identity

@@ -1,5 +1,6 @@
 using FindHouseAndT.Application.Services;
 using FindHouseAndT.Models.Entities;
+using FindHouseAndT.Models.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -25,7 +26,7 @@ namespace FindHouseAndT.WebApp.Pages.User
 			var infor = await _signInManager.GetExternalLoginInfoAsync();
 			if (infor == null)
 			{
-				return RedirectToPage("/User/RegisterUser");
+				return RedirectToPage("/User/UserManager");
 			}
 			var signInResult = await _signInManager.ExternalLoginSignInAsync(infor.LoginProvider, infor.ProviderKey, isPersistent: false);
 			if (signInResult.Succeeded)
@@ -37,7 +38,7 @@ namespace FindHouseAndT.WebApp.Pages.User
 				var email = infor.Principal.FindFirstValue(ClaimTypes.Email);
 				if (email == null)
 				{
-					return RedirectToPage("/User/RegisterUser");
+					return RedirectToPage("/User/UserManager");
 				}
 				var getUser = await _userManager.FindByEmailAsync(email);
 				if (getUser != null)
@@ -58,13 +59,14 @@ namespace FindHouseAndT.WebApp.Pages.User
 					var addLoginResult = await _userManager.AddLoginAsync(user, infor);
 					var customer = new Customer() {IdUser = user.Id, Name = user.Email };
 					var addCustomerResult = await _customerService.Register(customer);
-					if (addLoginResult.Succeeded && addCustomerResult)
+					var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Customer);
+					if (addLoginResult.Succeeded && addCustomerResult && addToRoleResult.Succeeded)
 					{
 						await _signInManager.SignInAsync(user, isPersistent: false);
 						return RedirectToPage("/Index");
 					}
                 }
-				return RedirectToPage("/User/RegisterUser");
+				return RedirectToPage("/User/UserManager");
 			}
 		}
 	}
