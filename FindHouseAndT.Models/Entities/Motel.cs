@@ -13,6 +13,9 @@ namespace FindHouseAndT.Models.Entities
         public required string Address {  get; set; }
         public required int QuantityRoom { get; set; }
         public required Guid IdHouseOwner { get; set; }
+        public required string Description1 { get; set; }
+        public string? Description2 { get; set; }
+        public required string KeyImageMotel { get; set; }
         public HouseOwner? HouseOwner { get; set; }
         public ICollection<Room> Rooms { get; set; } = new List<Room>();
         public ICollection<Order> Orders { get; set; } = new List<Order>();

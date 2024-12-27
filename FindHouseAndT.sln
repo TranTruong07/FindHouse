@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.Application", "FindHouseAndT.Application\FindHouseAndT.Application.csproj", "{9C6D6A62-05BF-4A91-B0EC-C505137380E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindHouseAndT.WebApp", "FindHouseAndT.WebApp\FindHouseAndT.WebApp.csproj", "{4917602E-D349-4657-BD02-1D536324DDE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindHouseAndT.WebApp", "FindHouseAndT.WebApp\FindHouseAndT.WebApp.csproj", "{4917602E-D349-4657-BD02-1D536324DDE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

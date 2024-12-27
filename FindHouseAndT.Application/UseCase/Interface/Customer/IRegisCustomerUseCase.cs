@@ -1,8 +1,10 @@
 ﻿
-namespace FindHouseAndT.Application.UseCase.Interface.Customer
+using FindHouseAndT.Models.Entities;
+
+namespace FindHouseAndT.Application.UseCase
 {
     public interface IRegisCustomerUseCase
     {
-        Task<bool> ExecuteAsync(Models.Entities.Customer customer);
+        Task<bool> ExecuteAsync(Customer customer);
     }
 }

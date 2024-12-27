@@ -1,28 +1,37 @@
 ﻿using FindHouseAndT.Application.UnitOfWork;
-using FindHouseAndT.Application.UseCase.Interface.Customer;
-using FindHouseAndT.Application.UseCase.Interface.UserApp;
 using FindHouseAndT.Models.Entities;
+using FindHouseAndT.Application.UseCase;
 
 namespace FindHouseAndT.Application.Services
 {
     public class CustomerService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRegisUserAppUseCase _regisUserAppUseCase;
         private readonly IRegisCustomerUseCase _regisCustomerUseCase;
+        private readonly IGetCustomerUseCase _getCustomerUseCase;
+        private readonly IUpdateCustomerUseCase _updateCustomerUseCase;
 
-        public CustomerService(IUnitOfWork unitOfWork, IRegisUserAppUseCase userAppUseCase, IRegisCustomerUseCase regisCustomerUseCase)
+        public CustomerService(IUnitOfWork unitOfWork, IRegisCustomerUseCase regisCustomerUseCase, IGetCustomerUseCase getCustomerUseCase, IUpdateCustomerUseCase updateCustomerUseCase)
         {
             _unitOfWork = unitOfWork;
-            _regisUserAppUseCase = userAppUseCase;
             _regisCustomerUseCase = regisCustomerUseCase;
+            _getCustomerUseCase = getCustomerUseCase;
+            _updateCustomerUseCase = updateCustomerUseCase;
         }
 
-        public async Task<bool> Register(UserApp userApp, Customer customer)
+        public async Task<bool> Register(Customer customer)
         {
-            await _regisUserAppUseCase.ExecuteAsync(userApp);
-            await _unitOfWork.CommitAsync();
             await _regisCustomerUseCase.ExecuteAsync(customer);
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+        public async Task<Customer?> GetCustomerAsync(Guid id)
+        {
+            return await _getCustomerUseCase.ExecuteAsync(id);
+        }
+        public async Task<bool> UpdateCustomer(Customer customer)
+        {
+            await _updateCustomerUseCase.ExecuteAsync(customer);
             await _unitOfWork.CommitAsync();
             return true;
         }

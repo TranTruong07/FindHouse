@@ -3,6 +3,7 @@ using FindHouseAndT.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FindHouseAndT.Infrastructure.Data;
 
 
 namespace FindHouseAndT.Infrastructure.Data.AppDbContext
@@ -27,7 +28,8 @@ namespace FindHouseAndT.Infrastructure.Data.AppDbContext
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new RoomConfiguration());
             builder.ApplyConfiguration(new UserAppConfiguration());
-            
+
+            builder.Seed();
             base.OnModelCreating(builder);
         }
 
