@@ -4,8 +4,10 @@ using FindHouseAndT.Infrastructure.Data.SeedData;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.MailKit;
 using FindHouseAndT.WebApp.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace FindHouseAndT.WebApp
 {
@@ -24,24 +26,33 @@ namespace FindHouseAndT.WebApp
             builder.Services.AddIdentity<UserApp, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<FindHouseDbContext>()
             .AddDefaultTokenProviders();
+
+			// Config Authentication 
+			builder.Services.ConfigureApplicationCookie(options =>
+			{
+				options.LoginPath = "/CustomerPages/CustomerView/UserManager"; 
+				options.AccessDeniedPath = "/AccessDenied"; 
+			});
 			// Setting mail service
 			var mailSetting = builder.Configuration.GetSection("MailSettings");
 			builder.Services.Configure<MailSetting>(mailSetting);
 			// Add Custom DI Config
 			builder.Services.AddCustomService();
 
-			//Login External
-			builder.Services.AddAuthentication().AddGoogle(option =>
+			// Configure external login (Google, Facebook)
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddGoogle(option =>
 			{
 				option.ClientId = builder.Configuration["Authen:Google:ClientId"];
 				option.ClientSecret = builder.Configuration["Authen:Google:ClientSecret"];
-			});
-			builder.Services.AddAuthentication().AddFacebook(option =>
+			})
+            .AddFacebook(option =>
 			{
 				option.AppId = builder.Configuration["Authen:Facebook:AppId"];
 				option.AppSecret = builder.Configuration["Authen:Facebook:AppSecret"];
 			});
 
+            
             // AWS Configure
             builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
             builder.Services.AddAWSService<IAmazonS3>();
@@ -52,10 +63,11 @@ namespace FindHouseAndT.WebApp
             {
                 var service = scop.ServiceProvider;
                 var context = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
-                try
+				var _db = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
+				try
                 {
                     context.Database.Migrate();
-                    await SeedDataIdentity.SeedAsync(service);
+                    await SeedDataIdentity.SeedAsync(service, _db);
                 }
                 catch (Exception ex)
                 {

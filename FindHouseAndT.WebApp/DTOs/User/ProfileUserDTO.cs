@@ -1,4 +1,4 @@
-﻿namespace FindHouseAndT.WebApp.DTOs.User
+﻿namespace FindHouseAndT.WebApp.DTOs
 {
     public class ProfileUserDTO
     {

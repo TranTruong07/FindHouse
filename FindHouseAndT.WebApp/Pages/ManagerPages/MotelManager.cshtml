@@ -1,0 +1,95 @@
+﻿@page
+@model FindHouseAndT.WebApp.Pages.ManagerPages.MotelManagerModel
+@{
+	Layout = "_ManagerLayout";
+}
+@section StyleSection {
+    <style>
+        .modal-backdrop {
+            z-index: 150 !important;
+        }
+    </style>
+}
+<div class="container">
+    <div class="position-relative" style="height: 50px;">
+        <div class="position-absolute top-0 end-0 m-2">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMotelModal">Add</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addMotelModal" tabindex="-1" role="dialog" aria-labelledby="addMotelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMotelModalLabel">Add New Motel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form thêm Motel -->
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="motelName">Name</label>
+                            <input asp-for="MotelManagerDTO.Name" class="form-control" id="motelName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelAddress">Address</label>
+                            <input asp-for="MotelManagerDTO.Address" class="form-control" id="motelAddress" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelQuantityRoom">Quantity Room</label>
+                            <input asp-for="MotelManagerDTO.QuantityRoom" class="form-control" id="motelQuantityRoom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelDescription1">Description1</label>
+                            <input asp-for="MotelManagerDTO.Description1" class="form-control" id="motelDescription1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelDescription2">Description2 (Optional)</label>
+                            <input asp-for="MotelManagerDTO.Description2" class="form-control" id="motelDescription2">
+                        </div>
+                        <div class="form-group">
+                            <label for="motelKeyImage">Image Motel</label>
+                            <input type="file" asp-for="MotelManagerDTO.ImageFIle" class="form-control" id="motelKeyImage" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>QuantityRoom</th>
+                    <th>HouseOwner</th>
+                    <th>Description1</th>
+                    <th>Description2</th>
+                    <th>KeyImageMotel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name=""></td>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td>
+                    <td>$320,800</td>
+                    <td>$320,800</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

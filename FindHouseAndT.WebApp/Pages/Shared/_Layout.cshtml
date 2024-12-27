@@ -1,4 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<Models.Entities.UserApp> signInManager
+@using FindHouseAndT.Models.Helper
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,17 +87,29 @@
 								</div>
 								@if (signInManager.IsSignedIn(User))
 								{
-									<div class="book_btn d-none d-lg-block">
-										<a asp-page="User/ProfileUser">User</a>
-									</div>
-									<div class="book_btn d-none d-lg-block">
-										<a asp-page="User/UserManager" asp-page-handler="SignOut">Sign Out</a>
-									</div>
+									if (User.IsInRole(UserRole.Landlord))
+									{
+										<div class="book_btn d-none d-lg-block">
+											<a asp-page="/ManagerPages/HomeManager">Manager Motel</a>
+										</div>
+										<div class="book_btn d-none d-lg-block">
+											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+										</div>
+									}
+									else
+									{
+										<div class="book_btn d-none d-lg-block">
+											<a asp-page="CustomerPages/CustomerView/ProfileUser">User</a>
+										</div>
+										<div class="book_btn d-none d-lg-block">
+											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+										</div>
+									}
 								}
 								else
 								{
 									<div class="book_btn d-none d-lg-block">
-										<a asp-page="User/UserManager">Login/Register</a>
+										<a asp-page="CustomerPages/CustomerView/UserManager">Login/Register</a>
 									</div>
 								}
 

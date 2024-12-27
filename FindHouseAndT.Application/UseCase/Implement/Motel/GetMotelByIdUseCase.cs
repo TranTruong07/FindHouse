@@ -12,9 +12,10 @@ namespace FindHouseAndT.Application.UseCase
             _repository = repository;
         }
 
-        public Motel? GetMotelById(Guid id)
-        {
-            return _repository.GetMotelByIdAsync(id);
-        }
+		public Motel? ExecuteAsync(Guid id)
+		{
+			return _repository.GetMotelByIdAsync(id);
+		}
+
     }
 }

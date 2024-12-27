@@ -23,15 +23,19 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<IRegisCustomerUseCase, RegisCustomerUseCase>();
             services.AddScoped<IRegisHouseOwnerUseCase, RegisHouseOwnerUseCase>();
             services.AddScoped<IRegisUserAppUseCase, RegisUserAppUseCase>();
-            services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
             services.AddScoped<IUpdateCustomerUseCase, UpdateCustomerUseCase>();
 
             // UseCase Common
             services.AddScoped<IAWSUploadImageUseCase, AWSUploadImageUseCase>();
             services.AddScoped<IGetPreSignedUrlUseCase, GetPreSignedUrlUseCase>();
 
-            // Service
-            services.AddScoped<MotelService>();
+            // UseCase Motel
+            services.AddScoped<ICreateMotelUseCase,  CreateMotelUseCase>();
+			services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
+
+
+			// Service
+			services.AddScoped<MotelService>();
             services.AddScoped<CustomerService>();
             services.AddScoped<AWSService>();
             services.AddTransient<IMailService, MailService>();

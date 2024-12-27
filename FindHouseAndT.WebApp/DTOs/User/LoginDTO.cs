@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using System.ComponentModel.DataAnnotations;
 
-namespace FindHouseAndT.WebApp.DTOs.User
+namespace FindHouseAndT.WebApp.DTOs
 {
 	public class LoginDTO
 	{

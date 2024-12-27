@@ -75,8 +75,19 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("IdHouseOwner")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("KeyImageMotel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -145,11 +156,22 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("float");
 
+                    b.Property<string>("Description1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
                     b.Property<Guid>("IdMotel")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("KeyImageRoom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");

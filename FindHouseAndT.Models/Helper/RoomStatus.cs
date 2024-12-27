@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace FindHouseAndT.Models.Helper
 {
-    public enum RoomStatus
-    {
-    }
+	public static class RoomStatus
+	{
+		public static string Booked = "Booked";
+		public static string Available = "Available";
+	}
 }
