@@ -3,7 +3,7 @@ using Amazon.S3.Model;
 using FindHouseAndT.Models.Helper;
 using Microsoft.AspNetCore.Http;
 
-namespace FindHouseAndT.Application.UseCase.Implement.Common
+namespace FindHouseAndT.Application.UseCase
 {
 	public class AWSUploadImageUseCase : IAWSUploadImageUseCase
 	{

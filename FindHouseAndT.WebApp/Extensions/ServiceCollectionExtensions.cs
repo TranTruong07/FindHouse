@@ -3,9 +3,6 @@ using FindHouseAndT.Application.Services;
 using FindHouseAndT.Application.Services.Common;
 using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
-using FindHouseAndT.Application.UseCase.Implement.Common;
-using FindHouseAndT.Application.UseCase.Interface.HouseOwner;
-using FindHouseAndT.Application.UseCase.Interface.UserApp;
 using FindHouseAndT.Infrastructure.Data.MailService;
 using FindHouseAndT.Infrastructure.Data.Repositories;
 using FindHouseAndT.Infrastructure.Data.UnitOfWork;
@@ -33,6 +30,9 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<ICreateMotelUseCase,  CreateMotelUseCase>();
 			services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
 			services.AddScoped<IGetAllMotelUseCase, GetAllMotelUseCase>();
+
+            // UseCase Room
+            services.AddScoped<ICreateNewRoomUseCase,  CreateNewRoomUseCase>();
 
 
 			// Service

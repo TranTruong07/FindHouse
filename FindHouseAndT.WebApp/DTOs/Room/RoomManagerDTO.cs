@@ -1,16 +1,25 @@
-﻿namespace FindHouseAndT.WebApp.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FindHouseAndT.WebApp.DTOs
 {
     public class RoomManagerDTO
     {
-        public string? RoomCode { get; set; }
+        [Required]
+        public string RoomCode { get; set; }
+        [Required]
         public int Floor { get; set; }
+        [Required]
         public double Area { get; set; }
+        [Required]
         public decimal Price { get; set; }
         public string? Status { get; set; }
-        public string? Description1 { get; set; }
+        [Required]
+        public string Description1 { get; set; }
         public string? Description2 { get; set; }
         public string? UrlImageRoom { get; set; }
-        public IFormFile? ImageRoom { get; set; }
+        [Required]
+        public IFormFile ImageRoom { get; set; }
+        [Required]
         public Guid IdMotel { get; set; }
     }
 }

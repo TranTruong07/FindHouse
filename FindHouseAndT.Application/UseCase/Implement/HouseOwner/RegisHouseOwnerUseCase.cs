@@ -1,5 +1,4 @@
 ﻿using FindHouseAndT.Application.Repositories;
-using FindHouseAndT.Application.UseCase.Interface.HouseOwner;
 using FindHouseAndT.Models.Entities;
 
 namespace FindHouseAndT.Application.UseCase

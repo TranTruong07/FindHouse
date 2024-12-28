@@ -2,8 +2,8 @@
 
 namespace FindHouseAndT.Application.UseCase
 {
-    public interface IRegisUserAppUseCase
+    public interface ICreateNewRoomUseCase
     {
-        Task<bool> ExecuteAsync(UserApp userApp);
+        Task ExecuteAsync(Room room);
     }
 }

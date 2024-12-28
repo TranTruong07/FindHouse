@@ -54,8 +54,14 @@
                             <input asp-for="RoomManagerDTO.Price" class="form-control" id="motelDescription2">
                         </div>
                         <div class="form-group">
-                            <label for="motelDescription2">Price</label>
-                            <input asp-for="RoomManagerDTO.Price" class="form-control" id="motelDescription2">
+                            <label for="motelSelection">Select Motel</label>
+                            @{
+                                var motels = ViewData["Motels"] as SelectList;
+                            }
+                            <select asp-for="RoomManagerDTO.IdMotel" class="form-control" asp-items="@motels">
+                                <option value="">-- Select Motel --</option>
+                            </select>
+                            <span asp-validation-for="RoomManagerDTO.IdMotel" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="motelKeyImage">Image Room</label>
@@ -83,7 +89,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var motel in Model.ListMotel)
+                @* @foreach(var motel in Model.ListMotel)
                 {
                     <tr>
                         <td><input type="checkbox" name=""></td>
@@ -96,7 +102,7 @@
                         <td>@motel.Description2</td>
                         <td><img style="width:100px" src="@motel.ImageMotel" /></td>
                     </tr>
-                }
+                } *@
             </tbody>
         </table>
     </div>

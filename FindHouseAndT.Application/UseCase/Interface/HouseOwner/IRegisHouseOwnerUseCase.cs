@@ -1,6 +1,6 @@
 ﻿
 
-namespace FindHouseAndT.Application.UseCase.Interface.HouseOwner
+namespace FindHouseAndT.Application.UseCase
 {
     public interface IRegisHouseOwnerUseCase
     {
