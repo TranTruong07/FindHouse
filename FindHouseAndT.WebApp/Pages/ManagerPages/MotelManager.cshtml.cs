@@ -24,9 +24,23 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
 		[BindProperty]
         public MotelManagerDTO MotelManagerDTO { get; set; } = new MotelManagerDTO();
         public List<MotelManagerDTO> ListMotel { get; set; } = new List<MotelManagerDTO>();
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            var motels = await _MotelService.GetAllMotelAsync();
+            foreach (var motel in motels)
+            {
+                ListMotel.Add(new MotelManagerDTO()
+                {
+					IdMotel = motel.IdMotel,
+					Address = motel.Address,
+					Description1 = motel.Description1,
+					Description2 = motel.Description2,
+					Name = motel.Name,
+					QuantityRoom = motel.QuantityRoom,
+					ImageMotel = await _AwsService.GetPreSignedUrl(motel.KeyImageMotel)
+				});
 
+			}    
         }
 
         public async Task<IActionResult> OnPostAsync()

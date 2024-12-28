@@ -32,6 +32,7 @@ namespace FindHouseAndT.WebApp.Extensions
             // UseCase Motel
             services.AddScoped<ICreateMotelUseCase,  CreateMotelUseCase>();
 			services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
+			services.AddScoped<IGetAllMotelUseCase, GetAllMotelUseCase>();
 
 
 			// Service
@@ -39,6 +40,7 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<CustomerService>();
             services.AddScoped<AWSService>();
             services.AddTransient<IMailService, MailService>();
+            services.AddScoped<RoomService>();
 
             //repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();

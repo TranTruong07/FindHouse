@@ -29,9 +29,9 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return await _houseDbContext.Rooms.Include(x => x.Motel).ToListAsync();
         }
 
-        public async Task<Room?> GetRoomByIdAsync(Guid id)
+        public async Task<Room?> GetRoomByIdAsync(string roomCode)
         {
-            return await _houseDbContext.Rooms.Where(x => x.IdRoom.Equals(id)).FirstOrDefaultAsync();
+            return await _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
         }
 
         public Task UpdateRoomAsync(Room room)

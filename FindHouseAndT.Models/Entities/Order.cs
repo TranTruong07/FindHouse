@@ -13,7 +13,7 @@ namespace FindHouseAndT.Models.Entities
         public Guid IdCustomer { get; set; }
         public Guid IdHouseOwner { get; set; }
         public Guid IdMotel { get; set; }
-        public Guid IdRoom { get; set; }
+        public required string IdRoom { get; set; }
         public required DateTime StartDate { get; set; }
         public required DateTime EndDate { get; set; }
         public required decimal Price { get; set; }

@@ -8,7 +8,7 @@ namespace FindHouseAndT.Infrastructure.Data.ConfigurationModels
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.HasKey(x => x.IdRoom);
+            builder.HasKey(x => x.RoomCode);
             builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
             builder.Property(x => x.Status).HasColumnType("varchar(200)");
             builder.HasOne(x => x.Motel).WithMany(x => x.Rooms).HasForeignKey(x => x.IdMotel).OnDelete(DeleteBehavior.Restrict);

@@ -10,12 +10,14 @@ namespace FindHouseAndT.Application.Services
         private IUnitOfWork _unitOfWork;
         private IGetMotelByIdUseCase _getMotelByIdUseCase;
         private ICreateMotelUseCase _createMotelUseCase;
+        private IGetAllMotelUseCase _getAllMotelUseCase;
 
-        public MotelService(IUnitOfWork unitOfWork, IGetMotelByIdUseCase getMotelByIdUseCase, ICreateMotelUseCase createMotelUseCase)
+        public MotelService(IUnitOfWork unitOfWork, IGetMotelByIdUseCase getMotelByIdUseCase, ICreateMotelUseCase createMotelUseCase, IGetAllMotelUseCase getAllMotelUseCase)
         {
             _unitOfWork = unitOfWork;
             _getMotelByIdUseCase = getMotelByIdUseCase;
             _createMotelUseCase = createMotelUseCase;
+            _getAllMotelUseCase = getAllMotelUseCase;
         }
 
         public Motel? GetMotelById(Guid id)
@@ -32,6 +34,10 @@ namespace FindHouseAndT.Application.Services
                 return ResultStatus.Success;
             }
             return ResultStatus.Failure;
+        }
+        public async Task<IEnumerable<Motel>> GetAllMotelAsync()
+        {
+            return await _getAllMotelUseCase.ExecuteAsync();
         }
 	}
 }
