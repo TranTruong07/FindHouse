@@ -33,6 +33,7 @@ namespace FindHouseAndT.WebApp.Extensions
 
             // UseCase Room
             services.AddScoped<ICreateNewRoomUseCase,  CreateNewRoomUseCase>();
+            services.AddScoped<IGetAllRoomsByMotelIdUseCase,  GetAllRoomsByMotelIdUseCase>();
 
 
 			// Service

@@ -60,5 +60,32 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
             ViewData["Motels"] = new SelectList(ListMotel, "IdMotel", "Name");
             return Page();
         }
+        [BindProperty(SupportsGet =true)]
+        public Guid MotelId { get; set; }
+        public async Task<IActionResult> OnGetLoadRoom()
+        {
+            if (!MotelId.Equals(Guid.Empty))
+            {
+                var listRoom = await _roomService.GetAllRoomsByMotelIdAsync(MotelId);
+                var rooms = new List<RoomManagerDTO>();
+                foreach(var room in listRoom)
+                {
+                    rooms.Add(new RoomManagerDTO()
+                    {
+                        RoomCode = room.RoomCode,
+                        Area = room.Area,
+                        Price = room.Price,
+                        IdMotel = room.IdMotel,
+                        Description1 = room.Description1,
+                        Description2 = room.Description2,
+                        Floor = room.Floor,
+                        Status = room.Status,
+                        UrlImageRoom = await _AwsService.GetPreSignedUrl(room.KeyImageRoom)
+                    });
+                }
+                return new JsonResult(rooms);
+            }
+            return new JsonResult("Error");
+        }
     }
 }

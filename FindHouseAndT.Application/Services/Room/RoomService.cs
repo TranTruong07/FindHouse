@@ -9,11 +9,13 @@ namespace FindHouseAndT.Application.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly ICreateNewRoomUseCase createNewRoomUseCase;
+        private readonly IGetAllRoomsByMotelIdUseCase getRoomsByMotelIdUseCase;
 
-        public RoomService(IUnitOfWork unitOfWork, ICreateNewRoomUseCase createNewRoomUseCase)
+        public RoomService(IUnitOfWork unitOfWork, ICreateNewRoomUseCase createNewRoomUseCase, IGetAllRoomsByMotelIdUseCase getAllRoomsByMotelIdUse)
         {
             this.unitOfWork = unitOfWork;
             this.createNewRoomUseCase = createNewRoomUseCase;
+            getRoomsByMotelIdUseCase = getAllRoomsByMotelIdUse;
         }
         public async Task<ResultStatus> CreateNewRoomAsync(Room room)
         {
@@ -24,6 +26,10 @@ namespace FindHouseAndT.Application.Services
                 return ResultStatus.Success;
             }
             return ResultStatus.Failure;
+        }
+        public async Task<IEnumerable<Room>> GetAllRoomsByMotelIdAsync(Guid id)
+        {
+            return await getRoomsByMotelIdUseCase.ExecuteAsync(id);
         }
     }
 }

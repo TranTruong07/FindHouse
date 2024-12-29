@@ -10,6 +10,9 @@
 		}
 	</style>
 }
+@{
+    var motels = ViewData["Motels"] as SelectList;
+}
 <div class="container">
     <div class="position-relative" style="height: 50px;">
         <div class="position-absolute top-0 end-0 m-2">
@@ -55,9 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label for="motelSelection">Select Motel</label>
-                            @{
-                                var motels = ViewData["Motels"] as SelectList;
-                            }
+                            
                             <select asp-for="RoomManagerDTO.IdMotel" class="form-control" asp-items="@motels">
                                 <option value="">-- Select Motel --</option>
                             </select>
@@ -73,37 +74,73 @@
             </div>
         </div>
     </div>
+    <div>
+        <select id="motelSelect" asp-for="RoomManagerDTO.IdMotel" class="form-control" asp-items="@motels">
+            <option value="">-- Select Motel --</option>
+        </select>
+    </div>
     <div class="row">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th></th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>QuantityRoom</th>
-                    <th>HouseOwner</th>
+                    <th>Code Room</th>
+                    <th>Number of Floor</th>
+                    <th>Area</th>
+                    <th>Status Room</th>
                     <th>Description1</th>
                     <th>Description2</th>
-                    <th>KeyImageMotel</th>
+                    <th>Price</th>
+                    <th>Image Room</th>
                 </tr>
             </thead>
-            <tbody>
-                @* @foreach(var motel in Model.ListMotel)
-                {
-                    <tr>
-                        <td><input type="checkbox" name=""></td>
-                        <td>@motel.IdMotel</td>
-                        <td>@motel.Name</td>
-                        <td>@motel.Address</td>
-                        <td>@motel.QuantityRoom</td>
-                        <td>@motel.IdHouseOwner</td>
-                        <td>@motel.Description1</td>
-                        <td>@motel.Description2</td>
-                        <td><img style="width:100px" src="@motel.ImageMotel" /></td>
-                    </tr>
-                } *@
+            <tbody id="roomTableBody">
+                
             </tbody>
         </table>
     </div>
 </div>
+
+@section ScriptSection {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#motelSelect').change(function () {
+                var motelId = $(this).val();
+                alert("Selected");
+                if (motelId) {
+                    $.ajax({
+                        url: '/ManagerPages/RoomManager?handler=LoadRoom', // Đường dẫn đến action lấy dữ liệu
+                        type: 'GET',
+                        data: { MotelId: motelId }, // Gửi idMotel tới server
+                        success: function (response) {
+                            alert(JSON.stringify(response, null, 2));
+                            $('#roomTableBody').html(''); // Xóa nội dung hiện tại của tbody
+
+                            // Thêm dữ liệu trả về từ server vào tbody
+                            $.each(response, function (index, room) {
+                                $('#roomTableBody').append('<tr>' +
+                                    '<td>' + (index + 1) + '</td>' +
+                                    '<td>' + room.roomCode + '</td>' +
+                                    '<td>' + room.floor + '</td>' +
+                                    '<td>' + room.area + '</td>' +
+                                    '<td>' + room.status + '</td>' +
+                                    '<td>' + room.description1 + '</td>' +
+                                    '<td>' + room.description2 + '</td>' +
+                                    '<td>' + room.price + '</td>' +
+                                    '<td><img src="' + room.urlImageRoom + '" alt="Room Image" style="width: 100px;"></td>' +
+                                    '</tr>');
+                            });
+                        },
+                        error: function () {
+                            console.log(xhr.responseText);
+                            alert("Error loading rooms. Please try again.");
+                        }
+                    });
+                } else {
+                    $('#roomData').html(''); // Nếu không chọn motel nào, làm sạch tbody
+                }
+            });
+        });
+    </script>
+}

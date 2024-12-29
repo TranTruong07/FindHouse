@@ -29,6 +29,11 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return await _houseDbContext.Rooms.Include(x => x.Motel).ToListAsync();
         }
 
+        public async Task<IEnumerable<Room>> GetAllRoomsByMotelId(Guid motelId)
+        {
+            return await _houseDbContext.Rooms.Where(x => x.IdMotel.Equals(motelId)).Include(x => x.Motel).ToListAsync();
+        }
+
         public async Task<Room?> GetRoomByIdAsync(string roomCode)
         {
             return await _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
