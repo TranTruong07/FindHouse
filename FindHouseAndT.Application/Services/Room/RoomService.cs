@@ -10,13 +10,16 @@ namespace FindHouseAndT.Application.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly ICreateNewRoomUseCase createNewRoomUseCase;
         private readonly IGetAllRoomsByMotelIdUseCase getRoomsByMotelIdUseCase;
+        private readonly IGetRoomByRoomCodeUseCase getRoomByRoomCodeUseCase;
 
-        public RoomService(IUnitOfWork unitOfWork, ICreateNewRoomUseCase createNewRoomUseCase, IGetAllRoomsByMotelIdUseCase getAllRoomsByMotelIdUse)
+        public RoomService(IUnitOfWork unitOfWork, ICreateNewRoomUseCase createNewRoomUseCase, IGetAllRoomsByMotelIdUseCase getRoomsByMotelIdUseCase, IGetRoomByRoomCodeUseCase getRoomByRoomCodeUseCase)
         {
             this.unitOfWork = unitOfWork;
             this.createNewRoomUseCase = createNewRoomUseCase;
-            getRoomsByMotelIdUseCase = getAllRoomsByMotelIdUse;
-        }
+            this.getRoomsByMotelIdUseCase = getRoomsByMotelIdUseCase;
+            this.getRoomByRoomCodeUseCase = getRoomByRoomCodeUseCase;
+
+		}
         public async Task<ResultStatus> CreateNewRoomAsync(Room room)
         {
             await createNewRoomUseCase.ExecuteAsync(room);
@@ -30,6 +33,11 @@ namespace FindHouseAndT.Application.Services
         public async Task<IEnumerable<Room>> GetAllRoomsByMotelIdAsync(Guid id)
         {
             return await getRoomsByMotelIdUseCase.ExecuteAsync(id);
+        }
+
+        public async Task<Room?> GetRoomByRoomCodeAsync(string roomCode)
+        {
+            return await getRoomByRoomCodeUseCase.ExecuteAsync(roomCode);
         }
     }
 }

@@ -1,0 +1,117 @@
+﻿@page
+@model FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView.BookRequestManagerModel
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FindHouseAndT.WebApp</title>
+
+
+	<!-- <link rel="manifest" href="site.webmanifest"> -->
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+	<!-- Place favicon.ico in the root directory -->
+	<!-- CSS here -->
+	<link rel="stylesheet" href="~/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="~/css/magnific-popup.css">
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/themify-icons.css">
+	<link rel="stylesheet" href="~/css/nice-select.css">
+	<link rel="stylesheet" href="~/css/flaticon.css">
+	<link rel="stylesheet" href="~/css/gijgo.css">
+	<link rel="stylesheet" href="~/css/animate.css">
+	<link rel="stylesheet" href="~/css/slicknav.css">
+	<link rel="stylesheet" href="~/css/style.css">
+
+</head>
+<body>
+	<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-lg-9 col-xl-7">
+					<div class="card rounded-3">
+						<img src="@Model.RoomManagerDTO.UrlImageRoom"
+							 class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+							 alt="Sample photo">
+						<div class="card-body p-4 p-md-5">
+							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Book Room @Model.RoomManagerDTO.RoomCode</h3>
+
+							<form class="px-md-2" method="post" enctype="multipart/form-data">
+								<input type="hidden" asp-for="@Model.BookRequestDTO.RoomCode" />
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">FullName</label>
+									<input asp-for="@Model.BookRequestDTO.FullName" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.FullName" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Date Of Birth</label>
+									<input asp-for="@Model.BookRequestDTO.DateOfBirth" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.DateOfBirth" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Address</label>
+									<input asp-for="@Model.BookRequestDTO.Address" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.Address" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Img Front CCCD</label>
+									<input asp-for="@Model.BookRequestDTO.ImgFrontCCCD" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.ImgFrontCCCD" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Img Back CCCD</label>
+									<input asp-for="@Model.BookRequestDTO.ImgBackCCCD" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.ImgBackCCCD" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Note</label>
+									<textarea asp-for="@Model.BookRequestDTO.Note" id="form3Example1q" class="form-control"></textarea>
+									<span asp-validation-for="@Model.BookRequestDTO.Note" class="text-danger"></span>
+								</div>
+								<button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-lg mb-1">Submit</button>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- JS here -->
+	<script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="~/js/popper.min.js"></script>
+	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/owl.carousel.min.js"></script>
+	<script src="~/js/isotope.pkgd.min.js"></script>
+	<script src="~/js/ajax-form.js"></script>
+	<script src="~/js/waypoints.min.js"></script>
+	<script src="~/js/jquery.counterup.min.js"></script>
+	<script src="~/js/imagesloaded.pkgd.min.js"></script>
+	<script src="~/js/scrollIt.js"></script>
+	<script src="~/js/jquery.scrollUp.min.js"></script>
+	<script src="~/js/wow.min.js"></script>
+	<script src="~/js/nice-select.min.js"></script>
+	<script src="~/js/jquery.slicknav.min.js"></script>
+	<script src="~/js/jquery.magnific-popup.min.js"></script>
+	<script src="~/js/plugins.js"></script>
+	<script src="~/js/gijgo.min.js"></script>
+
+	<!--contact js-->
+	<script src="~/js/contact.js"></script>
+	<script src="~/js/jquery.ajaxchimp.min.js"></script>
+	<script src="~/js/jquery.form.js"></script>
+	<script src="~/js/jquery.validate.min.js"></script>
+	<script src="~/js/mail-script.js"></script>
+
+	<script src="~/js/main.js"></script>
+</body>
+</html>

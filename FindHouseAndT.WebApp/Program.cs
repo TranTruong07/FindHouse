@@ -7,7 +7,6 @@ using FindHouseAndT.WebApp.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace FindHouseAndT.WebApp
 {
@@ -27,44 +26,44 @@ namespace FindHouseAndT.WebApp
             .AddEntityFrameworkStores<FindHouseDbContext>()
             .AddDefaultTokenProviders();
 
-			// Config Authentication 
-			builder.Services.ConfigureApplicationCookie(options =>
-			{
-				options.LoginPath = "/CustomerPages/CustomerView/UserManager"; 
-				options.AccessDeniedPath = "/AccessDenied"; 
-			});
-			// Setting mail service
-			var mailSetting = builder.Configuration.GetSection("MailSettings");
-			builder.Services.Configure<MailSetting>(mailSetting);
-			// Add Custom DI Config
-			builder.Services.AddCustomService();
+            // Config Authentication 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/CustomerPages/CommonView/UserManager";
+                options.AccessDeniedPath = "/CustomerPages/CommonView/AccessDenied";
+            });
+            // Setting mail service
+            var mailSetting = builder.Configuration.GetSection("MailSettings");
+            builder.Services.Configure<MailSetting>(mailSetting);
+            // Add Custom DI Config
+            builder.Services.AddCustomService();
 
-			// Configure external login (Google, Facebook)
-			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            // Configure external login (Google, Facebook)
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddGoogle(option =>
-			{
-				option.ClientId = builder.Configuration["Authen:Google:ClientId"];
-				option.ClientSecret = builder.Configuration["Authen:Google:ClientSecret"];
-			})
+            {
+                option.ClientId = builder.Configuration["Authen:Google:ClientId"];
+                option.ClientSecret = builder.Configuration["Authen:Google:ClientSecret"];
+            })
             .AddFacebook(option =>
-			{
-				option.AppId = builder.Configuration["Authen:Facebook:AppId"];
-				option.AppSecret = builder.Configuration["Authen:Facebook:AppSecret"];
-			});
+            {
+                option.AppId = builder.Configuration["Authen:Facebook:AppId"];
+                option.AppSecret = builder.Configuration["Authen:Facebook:AppSecret"];
+            });
 
-            
+
             // AWS Configure
             builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
             builder.Services.AddAWSService<IAmazonS3>();
 
-			var app = builder.Build();
-			// Seed data Identity
-			using (var scop = app.Services.CreateScope())
+            var app = builder.Build();
+            // Seed data Identity
+            using (var scop = app.Services.CreateScope())
             {
                 var service = scop.ServiceProvider;
                 var context = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
-				var _db = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
-				try
+                var _db = scop.ServiceProvider.GetRequiredService<FindHouseDbContext>();
+                try
                 {
                     context.Database.Migrate();
                     await SeedDataIdentity.SeedAsync(service, _db);
@@ -89,9 +88,18 @@ namespace FindHouseAndT.WebApp
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/")
+                {
+                    context.Response.Redirect("/CustomerPages/CommonView/Index");
+                }
+                else
+                {
+                    await next(context);
+                }
+            });
             app.MapRazorPages();
-
             app.Run();
         }
     }

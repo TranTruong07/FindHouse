@@ -6,8 +6,8 @@ namespace FindHouseAndT.Application.Repositories
     {
         public Task CreateMotelAsync(Motel motel);
         public Task UpdateMotelAsync(Motel motel);
-        public Task<IEnumerable<Motel>> GetAllMotelAsync();
-        public Motel? GetMotelByIdAsync(Guid id);
+        public Task<List<Motel>> GetAllMotelAsync();
+        public Motel? GetMotelById(Guid id);
         public Task DeleteMotelAsync(Motel motel);
     }
 }

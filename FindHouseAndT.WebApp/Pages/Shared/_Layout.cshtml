@@ -93,23 +93,23 @@
 											<a asp-page="/ManagerPages/HomeManager">Manager Motel</a>
 										</div>
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+											<a asp-page="/CustomerPages/CommonView/UserManager" asp-page-handler="SignOut">Sign Out</a>
 										</div>
 									}
 									else
 									{
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/ProfileUser">User</a>
+											<a asp-page="/CustomerPages/CustomerView/ProfileUser">User</a>
 										</div>
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+											<a asp-page="/CustomerPages/CommonView/UserManager" asp-page-handler="SignOut">Sign Out</a>
 										</div>
 									}
 								}
 								else
 								{
 									<div class="book_btn d-none d-lg-block">
-										<a asp-page="CustomerPages/CustomerView/UserManager">Login/Register</a>
+										<a asp-page="/CustomerPages/CommonView/UserManager">Login/Register</a>
 									</div>
 								}
 

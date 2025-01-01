@@ -25,7 +25,7 @@ namespace FindHouseAndT.Application.Services
             await _unitOfWork.CommitAsync();
             return true;
         }
-        public async Task<Customer?> GetCustomerAsync(Guid id)
+        public async Task<Customer?> GetCustomerByIdAsync(Guid id)
         {
             return await _getCustomerUseCase.ExecuteAsync(id);
         }

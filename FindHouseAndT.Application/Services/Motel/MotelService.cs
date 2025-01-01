@@ -22,7 +22,7 @@ namespace FindHouseAndT.Application.Services
 
         public Motel? GetMotelById(Guid id)
         {
-            return _getMotelByIdUseCase.ExecuteAsync(id);
+            return _getMotelByIdUseCase.Execute(id);
         }
 
         public async Task<ResultStatus> CreateMotelAsync(Motel motel)

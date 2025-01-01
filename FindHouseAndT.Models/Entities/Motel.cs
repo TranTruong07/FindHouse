@@ -18,6 +18,5 @@ namespace FindHouseAndT.Models.Entities
         public required string KeyImageMotel { get; set; }
         public HouseOwner? HouseOwner { get; set; }
         public ICollection<Room> Rooms { get; set; } = new List<Room>();
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

@@ -1,5 +1,4 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.Application.Services.Common;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.WebApp.DTOs;
 using Microsoft.AspNetCore.Identity;
@@ -28,22 +27,22 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
             var userClaims = User;
             if (userClaims == null)
             {
-                return RedirectToPage("/CustomerPages/CustomerView/UserManager");
+                return RedirectToPage("/CustomerPages/CommonView/UserManager");
             }
             var userName = userClaims.Identity?.Name;
             if(string.IsNullOrEmpty(userName))
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/CustomerPages/CommonView/Index");
             }
             var user = await _userManager.FindByNameAsync(userName);
             if (user == null)
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/CustomerPages/CommonView/Index");
             }
-            var customer = await _customerService.GetCustomerAsync(user.Id);
+            var customer = await _customerService.GetCustomerByIdAsync(user.Id);
             if (customer == null)
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/CustomerPages/CommonView/Index");
             }
             var urlAvatar = string.IsNullOrEmpty(customer.Avatar) ? null : await _aWSService.GetPreSignedUrl(customer.Avatar!);
 			ProfileUserDTO = new ProfileUserDTO()
@@ -78,7 +77,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 					ModelState.AddModelError("ErrorUser", "Not found User");
 					return Page();
 				}
-				var customer = await _customerService.GetCustomerAsync(user.Id);
+				var customer = await _customerService.GetCustomerByIdAsync(user.Id);
 				if (customer == null)
 				{
 					ModelState.AddModelError("ErrorCustomer", "Not found Customer");

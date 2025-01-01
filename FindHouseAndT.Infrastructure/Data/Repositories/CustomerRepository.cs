@@ -12,21 +12,20 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
         {
             _houseDbContext = context;
         }
-        public async Task CreateCustomerAsync(Customer customer)
+        public Task CreateCustomerAsync(Customer customer)
         {
-            await _houseDbContext.AddAsync(customer);
+            _houseDbContext.AddAsync(customer);
+            return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomerAsync()
+        public Task<List<Customer>> GetAllCustomerAsync()
         {
-            List<Customer> customers = await _houseDbContext.Customers.Include(x => x.UserApp).ToListAsync();
-            return customers;
+            return _houseDbContext.Customers.ToListAsync();
         }
 
-        public async Task<Customer?> GetCustomerByIdAsync(Guid id)
+        public Task<Customer?> GetCustomerByIdAsync(Guid id)
         {
-            Customer? customer = await _houseDbContext.Customers.Include(x => x.UserApp).Where(x => x.IdUser.Equals(id)).SingleOrDefaultAsync();
-            return customer;
+            return _houseDbContext.Customers.Include(x => x.UserApp).Where(x => x.IdUser.Equals(id)).SingleOrDefaultAsync();
         }
 
         public Task UpdateCustomerAsync(Customer customer)

@@ -6,7 +6,7 @@ namespace FindHouseAndT.Application.Repositories
     {
         public Task CreateHouseOwnerAsync(HouseOwner houseOwner);
         public Task UpdateHouseOwnerAsync(HouseOwner houseOwner);
-        public Task<IEnumerable<HouseOwner>> GetAllHouseOwnerAsync();
+        public Task<List<HouseOwner>> GetAllHouseOwnerAsync();
         public Task<HouseOwner?> GetHouseOwnerByIdAsync(Guid id);
     }
 }

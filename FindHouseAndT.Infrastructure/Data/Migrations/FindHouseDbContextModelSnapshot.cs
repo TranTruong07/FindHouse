@@ -22,6 +22,56 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("FindHouseAndT.Models.Entities.BookRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdCustomer")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("KeyUrlBackCCCD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyUrlFrontCCCD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoomCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("RoomCode");
+
+                    b.ToTable("BookRequests");
+                });
+
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Customer", b =>
                 {
                     b.Property<Guid>("IdUser")
@@ -115,12 +165,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.Property<Guid>("IdCustomer")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdHouseOwner")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdMotel")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("IdRoom")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -138,10 +182,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.HasKey("IdOrder");
 
                     b.HasIndex("IdCustomer");
-
-                    b.HasIndex("IdHouseOwner");
-
-                    b.HasIndex("IdMotel");
 
                     b.HasIndex("IdRoom");
 
@@ -398,6 +438,25 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FindHouseAndT.Models.Entities.BookRequest", b =>
+                {
+                    b.HasOne("FindHouseAndT.Models.Entities.Customer", "Customer")
+                        .WithMany("BookRequests")
+                        .HasForeignKey("IdCustomer")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FindHouseAndT.Models.Entities.Room", "Room")
+                        .WithMany("BookRequests")
+                        .HasForeignKey("RoomCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Customer", b =>
                 {
                     b.HasOne("FindHouseAndT.Models.Entities.UserApp", "UserApp")
@@ -439,18 +498,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FindHouseAndT.Models.Entities.HouseOwner", "HouseOwner")
-                        .WithMany("Orders")
-                        .HasForeignKey("IdHouseOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FindHouseAndT.Models.Entities.Motel", "Motel")
-                        .WithMany("Orders")
-                        .HasForeignKey("IdMotel")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("FindHouseAndT.Models.Entities.Room", "Room")
                         .WithMany("Orders")
                         .HasForeignKey("IdRoom")
@@ -458,10 +505,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-
-                    b.Navigation("HouseOwner");
-
-                    b.Navigation("Motel");
 
                     b.Navigation("Room");
                 });
@@ -530,25 +573,25 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Customer", b =>
                 {
+                    b.Navigation("BookRequests");
+
                     b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.HouseOwner", b =>
                 {
                     b.Navigation("Motels");
-
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Motel", b =>
                 {
-                    b.Navigation("Orders");
-
                     b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Room", b =>
                 {
+                    b.Navigation("BookRequests");
+
                     b.Navigation("Orders");
                 });
 

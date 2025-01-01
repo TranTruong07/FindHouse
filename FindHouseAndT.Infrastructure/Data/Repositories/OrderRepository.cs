@@ -12,19 +12,20 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
         {
             _houseDbContext = context;
         }
-        public async Task CreateOrderAsync(Order order)
+        public Task CreateOrderAsync(Order order)
         {
-            await _houseDbContext.Orders.AddAsync(order);
+            _houseDbContext.Orders.AddAsync(order);
+            return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Order>> GetAllOrderAsync()
+        public Task<List<Order>> GetAllOrderAsync()
         {
-            return await _houseDbContext.Orders.Include(x => x.Customer).Include(x => x.Room).Include(x => x.HouseOwner).Include(x => x.Motel).ToListAsync();
+            return _houseDbContext.Orders.Include(x => x.Customer).Include(x => x.Room).ToListAsync();
         }
 
-        public async Task<Order?> GetOrderByIdAsync(Guid id)
+        public Task<Order?> GetOrderByIdAsync(Guid id)
         {
-            return await _houseDbContext.Orders.Include(x => x.Customer).Include(x => x.Room).Include(x => x.HouseOwner).Include(x => x.Motel).FirstOrDefaultAsync(x => x.IdOrder.Equals(id));
+            return _houseDbContext.Orders.Include(x => x.Customer).Include(x => x.Room).FirstOrDefaultAsync(x => x.IdOrder.Equals(id));
         }
 
         public Task UpdateOrderAsync(Order order)

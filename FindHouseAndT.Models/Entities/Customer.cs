@@ -14,5 +14,6 @@ namespace FindHouseAndT.Models.Entities
         public string? Avatar {  get; set; }
         public UserApp? UserApp { get; set; }
         public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<BookRequest> BookRequests { get; set; } = new List<BookRequest>();
     }
 }

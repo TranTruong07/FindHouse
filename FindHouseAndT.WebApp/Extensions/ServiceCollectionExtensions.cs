@@ -1,6 +1,5 @@
 ﻿using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.Application.Services.Common;
 using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
 using FindHouseAndT.Infrastructure.Data.MailService;
@@ -34,7 +33,10 @@ namespace FindHouseAndT.WebApp.Extensions
             // UseCase Room
             services.AddScoped<ICreateNewRoomUseCase,  CreateNewRoomUseCase>();
             services.AddScoped<IGetAllRoomsByMotelIdUseCase,  GetAllRoomsByMotelIdUseCase>();
+            services.AddScoped<IGetRoomByRoomCodeUseCase, GetRoomByRoomCodeUseCase>();
 
+            // UseCase BookRequest
+            services.AddScoped<ICreateBookRequestUseCase,  CreateBookRequestUseCase>();
 
 			// Service
 			services.AddScoped<MotelService>();
@@ -42,6 +44,7 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<AWSService>();
             services.AddTransient<IMailService, MailService>();
             services.AddScoped<RoomService>();
+            services.AddScoped<BookRequestService>();
 
             //repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -50,6 +53,7 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IHouseOwnerRepository, HouseOwnerRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IBookRequestRepository, BookRequestRepository>();
             return services;
         }
     }

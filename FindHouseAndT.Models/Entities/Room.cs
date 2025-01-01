@@ -14,5 +14,6 @@ namespace FindHouseAndT.Models.Entities
 		public Guid IdMotel { get; set; }
         public Motel? Motel { get; set; }
         public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<BookRequest> BookRequests { get; set; } = new List<BookRequest>();
     }
 }

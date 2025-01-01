@@ -13,9 +13,10 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             _houseDbContext = context;
         }
 
-        public async Task CreateRoomAsync(Room room)
+        public Task CreateRoomAsync(Room room)
         {
-            await _houseDbContext.Rooms.AddAsync(room);
+            _houseDbContext.Rooms.AddAsync(room);
+            return Task.CompletedTask;
         }
 
         public Task DeleteRoomAsync(Room room)
@@ -24,19 +25,19 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Room>> GetAllRoomAsync()
+        public Task<List<Room>> GetAllRoomAsync()
         {
-            return await _houseDbContext.Rooms.Include(x => x.Motel).ToListAsync();
+            return _houseDbContext.Rooms.Include(x => x.Motel).ToListAsync();
         }
 
-        public async Task<IEnumerable<Room>> GetAllRoomsByMotelId(Guid motelId)
+        public Task<List<Room>> GetAllRoomsByMotelId(Guid motelId)
         {
-            return await _houseDbContext.Rooms.Where(x => x.IdMotel.Equals(motelId)).Include(x => x.Motel).ToListAsync();
+            return _houseDbContext.Rooms.Where(x => x.IdMotel.Equals(motelId)).Include(x => x.Motel).ToListAsync();
         }
 
-        public async Task<Room?> GetRoomByIdAsync(string roomCode)
+        public  Task<Room?> GetRoomByIdAsync(string roomCode)
         {
-            return await _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
+            return _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
         }
 
         public Task UpdateRoomAsync(Room room)

@@ -18,6 +18,7 @@ namespace FindHouseAndT.Infrastructure.Data.AppDbContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<UserApp> UserApps { get; set; }
+        public DbSet<BookRequest> BookRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,7 +28,7 @@ namespace FindHouseAndT.Infrastructure.Data.AppDbContext
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new RoomConfiguration());
             builder.ApplyConfiguration(new UserAppConfiguration());
-
+            builder.ApplyConfiguration(new BookRequestConfiguration());
             builder.Seed();
             base.OnModelCreating(builder);
         }

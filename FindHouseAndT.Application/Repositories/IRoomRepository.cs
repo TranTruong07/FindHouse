@@ -6,9 +6,9 @@ namespace FindHouseAndT.Application.Repositories
     {
         Task CreateRoomAsync(Room room);
         Task UpdateRoomAsync(Room room);
-        Task<IEnumerable<Room>> GetAllRoomAsync();
+        Task<List<Room>> GetAllRoomAsync();
         Task<Room?> GetRoomByIdAsync(string roomCode);
         Task DeleteRoomAsync(Room room);
-        Task<IEnumerable<Room>> GetAllRoomsByMotelId(Guid motelId);
+        Task<List<Room>> GetAllRoomsByMotelId(Guid motelId);
     }
 }

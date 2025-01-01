@@ -6,7 +6,7 @@ namespace FindHouseAndT.Application.UseCase
 {
 	public class GetPreSignedUrlUseCase : IGetPreSignedUrlUseCase
 	{
-		public async Task<string?> ExecuteAsync(string key, IAmazonS3 amazonS3)
+		public Task<string?> ExecuteAsync(string key, IAmazonS3 amazonS3)
 		{
 			var preSignedRequest = new GetPreSignedUrlRequest()
 			{
@@ -14,7 +14,7 @@ namespace FindHouseAndT.Application.UseCase
 				Key = key,
 				Expires = DateTime.UtcNow.AddDays(1)
 			};
-			return await amazonS3.GetPreSignedURLAsync(preSignedRequest);
+			return amazonS3.GetPreSignedURLAsync(preSignedRequest);
 		}
 	}
 }

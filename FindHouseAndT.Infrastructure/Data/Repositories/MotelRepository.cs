@@ -12,9 +12,10 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
         {
             _houseDbContext = context;
         }
-        public async Task CreateMotelAsync(Motel motel)
+        public Task CreateMotelAsync(Motel motel)
         {
-            await _houseDbContext.Motels.AddAsync(motel);
+            _houseDbContext.Motels.AddAsync(motel);
+            return Task.CompletedTask;
         }
 
         public Task DeleteMotelAsync(Motel motel)
@@ -23,14 +24,14 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Motel>> GetAllMotelAsync()
+        public Task<List<Motel>> GetAllMotelAsync()
         {
-            return await _houseDbContext.Motels.Include(x => x.HouseOwner).ToListAsync();
+            return _houseDbContext.Motels.Include(x => x.HouseOwner).ToListAsync();
         }
 
-        public Motel? GetMotelByIdAsync(Guid id)
+        public Motel? GetMotelById(Guid id)
         {
-            return _houseDbContext.Motels.Include(x => x.HouseOwner).Where(x => x.IdMotel.Equals(id)).FirstOrDefault();
+            return _houseDbContext.Motels.Include(x => x.HouseOwner).Where(x => x.IdMotel.Equals(id)).Include(x => x.Rooms).FirstOrDefault();
         }
 
         public Task UpdateMotelAsync(Motel motel)

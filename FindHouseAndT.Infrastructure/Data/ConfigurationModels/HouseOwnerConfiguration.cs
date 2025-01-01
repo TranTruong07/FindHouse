@@ -10,7 +10,6 @@ namespace FindHouseAndT.Infrastructure.Data.ConfigurationModels
         {
             builder.HasKey(x => x.IdHouseOwner);
             builder.HasMany(x => x.Motels).WithOne(x => x.HouseOwner).HasForeignKey(x => x.IdHouseOwner);
-            builder.HasMany(x => x.Orders).WithOne(x => x.HouseOwner).HasForeignKey(x => x.IdHouseOwner);
         }
     }
 }

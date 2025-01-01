@@ -72,7 +72,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 						var result3 = await _customerService.Register(custom);
 						if (result3)
 						{
-							return Redirect("/Index");
+							return Redirect("/CustomerPages/CommonView/Index");
 						}
 					}
 				}
@@ -106,7 +106,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 							return RedirectToPage("/CustomerPages/CustomerView/ConfirmEmail");
 						}
 						await _signInManager.SignInAsync(user, isPersistent: false);
-						return RedirectToPage("/Index");
+						return RedirectToPage("/CustomerPages/CommonView/Index");
 					}
 				}
 				
@@ -130,7 +130,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 		{
 			LoginDTO.Schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
 			await _signInManager.SignOutAsync();
-			return RedirectToPage("/CustomerPages/CustomerView/UserManager");
+			return RedirectToPage("/CustomerPages/CommonView/UserManager");
 		}
 	}
 }

@@ -1,13 +1,8 @@
 ﻿using Amazon.S3;
 using FindHouseAndT.Application.UseCase;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FindHouseAndT.Application.Services.Common
+namespace FindHouseAndT.Application.Services
 {
 	public class AWSService
 	{
@@ -22,20 +17,22 @@ namespace FindHouseAndT.Application.Services.Common
 			_getPreSignedUrlUseCase = getPreSignedUrlUseCase;
 		}
 
-		public async Task<string?> UploadImageToAWSAsync(IFormFile? file)
+		public Task<string?> UploadImageToAWSAsync(IFormFile? file)
 		{
 			if (file == null)
-				return null;
-			return await _uploadImageUseCase.ExecuteAsync(file, _amazonS3);
+			{
+				return Task.FromResult<string?>(null);
+			}
+			return _uploadImageUseCase.ExecuteAsync(file, _amazonS3);
 		}
 
-		public async Task<string?> GetPreSignedUrl(string key)
+		public Task<string?> GetPreSignedUrl(string key)
 		{
 			if (string.IsNullOrEmpty(key))
 			{
-				return null;
+				return Task.FromResult<string?>(null);
 			}
-			return await _getPreSignedUrlUseCase.ExecuteAsync(key, _amazonS3);
+			return _getPreSignedUrlUseCase.ExecuteAsync(key, _amazonS3);
 		}
 	}
 }

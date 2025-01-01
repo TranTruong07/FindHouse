@@ -15,6 +15,5 @@ namespace FindHouseAndT.Models.Entities
         public string? Address { get; set; }
         public UserApp? UserApp { get; set; }
         public ICollection<Motel> Motels { get; set; } = new List<Motel>();
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
