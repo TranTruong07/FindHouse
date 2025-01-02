@@ -36,7 +36,7 @@
 							<div class="main-menu  d-none d-lg-block">
 								<nav>
 									<ul id="navigation">
-										<li><a class="active" href="index.html">home</a></li>
+										<li><a class="active" asp-page="/CustomerPages/CommonView/Index">home</a></li>
 										<li><a href="rooms.html">rooms</a></li>
 										<li><a href="about.html">About</a></li>
 										<li>
@@ -52,7 +52,15 @@
 												<li><a href="elements.html">elements</a></li>
 											</ul>
 										</li>
-										<li><a href="contact.html">Contact</a></li>
+										<li>
+											@if (signInManager.IsSignedIn(User))
+											{
+												if (User.IsInRole(UserRole.Customer))
+												{
+													<a asp-page="/CustomerPages/CustomerView/ListBookRequest">Book Requests</a>
+												}
+											}
+										</li>
 									</ul>
 								</nav>
 							</div>

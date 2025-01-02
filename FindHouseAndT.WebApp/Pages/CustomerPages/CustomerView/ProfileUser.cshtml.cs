@@ -1,6 +1,6 @@
 using FindHouseAndT.Application.Services;
 using FindHouseAndT.Models.Entities;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,7 +44,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
             {
                 return RedirectToPage("/CustomerPages/CommonView/Index");
             }
-            var urlAvatar = string.IsNullOrEmpty(customer.Avatar) ? null : await _aWSService.GetPreSignedUrl(customer.Avatar!);
+            var urlAvatar = string.IsNullOrEmpty(customer.Avatar) ? null : await _aWSService.GetPreSignedUrlAsync(customer.Avatar!);
 			ProfileUserDTO = new ProfileUserDTO()
             {
                 Id = user.Id,
@@ -88,7 +88,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 				customer.BirthDate = ProfileUserDTO.BirthDate;
 				if (key != null)
 				{
-					var preSignedUrl = await _aWSService.GetPreSignedUrl(key);
+					var preSignedUrl = await _aWSService.GetPreSignedUrlAsync(key);
 					if(preSignedUrl != null)
                     {
                         ProfileUserDTO.UrlAvatar = preSignedUrl;
@@ -97,7 +97,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
                 }
                 else
                 {
-					var preSignedUrl = await _aWSService.GetPreSignedUrl(customer.Avatar!);
+					var preSignedUrl = await _aWSService.GetPreSignedUrlAsync(customer.Avatar!);
                     if(preSignedUrl != null)
                     {
                         ProfileUserDTO.UrlAvatar = preSignedUrl;

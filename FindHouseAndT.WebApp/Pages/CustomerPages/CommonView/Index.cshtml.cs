@@ -1,5 +1,5 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FindHouseAndT.WebApp.Pages
@@ -31,7 +31,7 @@ namespace FindHouseAndT.WebApp.Pages
                     IdHouseOwner = motel.IdHouseOwner,
                     Name = motel.Name,
                     QuantityRoom = motel.QuantityRoom,
-                    ImageMotel = await _amazonService.GetPreSignedUrl(motel.KeyImageMotel)
+                    ImageMotel = await _amazonService.GetPreSignedUrlAsync(motel.KeyImageMotel)
                 });
 			}
         }

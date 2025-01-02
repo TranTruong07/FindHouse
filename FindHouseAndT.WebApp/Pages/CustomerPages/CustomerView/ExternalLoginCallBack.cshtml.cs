@@ -60,7 +60,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 					var customer = new Customer() {IdUser = user.Id, Name = user.Email };
 					var addCustomerResult = await _customerService.Register(customer);
 					var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Customer);
-					if (addLoginResult.Succeeded && addCustomerResult && addToRoleResult.Succeeded)
+					if (addLoginResult.Succeeded && addCustomerResult.ResultCode == ResultCode.Success && addToRoleResult.Succeeded)
 					{
 						await _signInManager.SignInAsync(user, isPersistent: false);
 						return RedirectToPage("/CustomerPages/CommonView/Index");

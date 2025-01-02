@@ -11,5 +11,6 @@ namespace FindHouseAndT.Application.Repositories
 	{
 		Task CreateBookRequestAsync(BookRequest bookRequest);
 		void UpdateBookRequestAsync(BookRequest bookRequest);
+		Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId);
 	}
 }

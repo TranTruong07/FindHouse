@@ -1,8 +1,7 @@
 using FindHouseAndT.Application.Services;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
-using FindHouseAndT.WebApp.DTOs;
-using FindHouseAndT.WebApp.DTOs.BookRequest;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -41,7 +40,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 					return RedirectToPage("/CustomerPages/CommonView/AccessDenied");
 				}
 				RoomManagerDTO.RoomCode = room.RoomCode;
-				RoomManagerDTO.UrlImageRoom = await amazonService.GetPreSignedUrl(room.KeyImageRoom);
+				RoomManagerDTO.UrlImageRoom = await amazonService.GetPreSignedUrlAsync(room.KeyImageRoom);
 
 				var customer = await customerService.GetCustomerByIdAsync(Guid.Parse(userIdClaim.Value));
 				if (customer == null)

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace FindHouseAndT.WebApp.DTOs.BookRequest
+namespace FindHouseAndT.Application.DTOs
 {
 	public class BookRequestDTO
 	{
@@ -19,5 +20,6 @@ namespace FindHouseAndT.WebApp.DTOs.BookRequest
 		[Required]
 		public IFormFile ImgBackCCCD { get; set; }
 		public string? Note { get; set; }
+		public string Status {  get; set; }
 	}
 }

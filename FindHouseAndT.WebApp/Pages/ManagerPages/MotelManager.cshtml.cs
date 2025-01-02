@@ -1,7 +1,7 @@
 using FindHouseAndT.Application.Services;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -36,7 +36,7 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
 					Description2 = motel.Description2,
 					Name = motel.Name,
 					QuantityRoom = motel.QuantityRoom,
-					ImageMotel = await _AwsService.GetPreSignedUrl(motel.KeyImageMotel)
+					ImageMotel = await _AwsService.GetPreSignedUrlAsync(motel.KeyImageMotel)
 				});
 
 			}    

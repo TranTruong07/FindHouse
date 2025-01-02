@@ -26,7 +26,7 @@ namespace FindHouseAndT.Application.Services
 			return _uploadImageUseCase.ExecuteAsync(file, _amazonS3);
 		}
 
-		public Task<string?> GetPreSignedUrl(string key)
+		public Task<string?> GetPreSignedUrlAsync(string key)
 		{
 			if (string.IsNullOrEmpty(key))
 			{

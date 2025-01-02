@@ -10,5 +10,7 @@ namespace FindHouseAndT.Models.Helper
 	{
 		public const int Success = 1;
 		public const int Failure = 0;
+		public const int Failure_500 = 500;
+		public const int Failure_404 = 404;
 	}
 }

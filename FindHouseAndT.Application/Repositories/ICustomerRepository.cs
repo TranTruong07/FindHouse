@@ -4,9 +4,9 @@ namespace FindHouseAndT.Application.Repositories
 {
     public interface ICustomerRepository
     {
-        public Task CreateCustomerAsync(Customer customer);
-        public Task UpdateCustomerAsync(Customer customer);
-        public Task<List<Customer>> GetAllCustomerAsync();
-        public Task<Customer?> GetCustomerByIdAsync(Guid id);
+        Task CreateCustomerAsync(Customer customer);
+        Task UpdateCustomerAsync(Customer customer);
+        Task<List<Customer>> GetAllCustomerAsync();
+        Task<Customer?> GetCustomerByIdAsync(Guid id);
     }
 }

@@ -1,5 +1,5 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -79,7 +79,7 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
                         Description2 = room.Description2,
                         Floor = room.Floor,
                         Status = room.Status,
-                        UrlImageRoom = await _AwsService.GetPreSignedUrl(room.KeyImageRoom)
+                        UrlImageRoom = await _AwsService.GetPreSignedUrlAsync(room.KeyImageRoom)
                     });
                 }
                 return new JsonResult(rooms);

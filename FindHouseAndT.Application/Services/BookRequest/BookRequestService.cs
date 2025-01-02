@@ -1,24 +1,24 @@
-﻿using FindHouseAndT.Application.UnitOfWork;
+﻿using FindHouseAndT.Application.DTOs;
+using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindHouseAndT.Application.Services
 {
 	public class BookRequestService
 	{
 		private readonly ICreateBookRequestUseCase createBookRequestUseCase;
-		private readonly IUnitOfWork unitOfWork;
+		private readonly IGetBookRequestByCustomerIdUseCase getBookRequestByCustomerIdUseCase;
+		private readonly AWSService amazonService;
+        private readonly IUnitOfWork unitOfWork;
 
-		public BookRequestService(ICreateBookRequestUseCase createBookRequestUseCase, IUnitOfWork unitOfWork)
+		public BookRequestService(ICreateBookRequestUseCase createBookRequestUseCase, AWSService amazonService, IGetBookRequestByCustomerIdUseCase getBookRequestByCustomerIdUseCase, IUnitOfWork unitOfWork)
 		{
 			this.createBookRequestUseCase = createBookRequestUseCase;
 			this.unitOfWork = unitOfWork;
+			this.getBookRequestByCustomerIdUseCase = getBookRequestByCustomerIdUseCase;
+			this.amazonService = amazonService;
 		}
 
 		public async Task<ResultStatus> CreateNewBookRequestAsync(BookRequest bookRequest)
@@ -31,5 +31,27 @@ namespace FindHouseAndT.Application.Services
 			}
 			return ResultStatus.Failure;
 		}
-	}
+
+        public async Task<List<BookRequestDTO>> GetAllBookRequestByCustomerIdAsync(Guid customerId)
+        {
+			var bookRequest = await getBookRequestByCustomerIdUseCase.ExecuteAsync(customerId);
+			List<BookRequestDTO> list = new List<BookRequestDTO>();
+			foreach(var br in bookRequest)
+			{
+				list.Add(new BookRequestDTO
+				{
+					Address = br.Address,
+					DateOfBirth = br.DateOfBirth,
+					FullName = br.FullName,
+					IdCustomer = customerId,
+					Note = br.Note,
+					RoomCode = br.RoomCode,
+					UrlBackCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlBackCCCD),
+					UrlFrontCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlFrontCCCD),
+					Status = br.Status
+				});
+			}
+			return list;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Application.UseCase;
+using FindHouseAndT.Models.Helper;
 
 namespace FindHouseAndT.Application.Services
 {
@@ -19,21 +20,29 @@ namespace FindHouseAndT.Application.Services
             _updateCustomerUseCase = updateCustomerUseCase;
         }
 
-        public async Task<bool> Register(Customer customer)
+        public async Task<ResultStatus> Register(Customer customer)
         {
             await _regisCustomerUseCase.ExecuteAsync(customer);
-            await _unitOfWork.CommitAsync();
-            return true;
-        }
-        public async Task<Customer?> GetCustomerByIdAsync(Guid id)
+			var result = await _unitOfWork.CommitAsync();
+			if (result != 0)
+			{
+				return ResultStatus.Success;
+			}
+			return ResultStatus.Failure;
+		}
+        public Task<Customer?> GetCustomerByIdAsync(Guid id)
         {
-            return await _getCustomerUseCase.ExecuteAsync(id);
+            return _getCustomerUseCase.ExecuteAsync(id);
         }
-        public async Task<bool> UpdateCustomer(Customer customer)
+        public async Task<ResultStatus> UpdateCustomer(Customer customer)
         {
             await _updateCustomerUseCase.ExecuteAsync(customer);
-            await _unitOfWork.CommitAsync();
-            return true;
+            var result = await _unitOfWork.CommitAsync();
+            if(result != 0)
+            {
+                return ResultStatus.Success;
+            }
+            return ResultStatus.Failure;
         }
     }
 }

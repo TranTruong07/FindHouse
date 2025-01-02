@@ -1,7 +1,7 @@
 ﻿using FindHouseAndT.WebApp.ValidationAttributeCustom;
 using System.ComponentModel.DataAnnotations;
 
-namespace FindHouseAndT.WebApp.DTOs
+namespace FindHouseAndT.Application.DTOs
 {
     public class RegisterDTO
     {

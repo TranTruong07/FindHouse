@@ -2,7 +2,7 @@ using FindHouseAndT.Application.Services;
 using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
 using FindHouseAndT.Models.MailKit;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -70,7 +70,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 						await _userManager.AddToRoleAsync(user, UserRole.Customer);
 						custom.IdUser = user.Id;
 						var result3 = await _customerService.Register(custom);
-						if (result3)
+						if (result3.ResultCode == ResultCode.Success)
 						{
 							return Redirect("/CustomerPages/CommonView/Index");
 						}

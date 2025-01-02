@@ -1,6 +1,7 @@
 ﻿using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Infrastructure.Data.AppDbContext;
 using FindHouseAndT.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindHouseAndT.Infrastructure.Data.Repositories
 {
@@ -19,7 +20,12 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
 			return Task.CompletedTask;
 		}
 
-		public void UpdateBookRequestAsync(BookRequest bookRequest)
+        public Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId)
+        {
+            return _dbContext.BookRequests.Where(x => x.IdCustomer.Equals(customerId)).ToListAsync();
+        }
+
+        public void UpdateBookRequestAsync(BookRequest bookRequest)
 		{
 			_dbContext.Update(bookRequest);
 		}

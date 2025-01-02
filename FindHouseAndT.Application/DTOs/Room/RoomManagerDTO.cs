@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace FindHouseAndT.WebApp.DTOs
+namespace FindHouseAndT.Application.DTOs
 {
     public class RoomManagerDTO
     {

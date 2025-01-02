@@ -37,6 +37,7 @@ namespace FindHouseAndT.WebApp.Extensions
 
             // UseCase BookRequest
             services.AddScoped<ICreateBookRequestUseCase,  CreateBookRequestUseCase>();
+            services.AddScoped<IGetBookRequestByCustomerIdUseCase, GetBookRequestByCustomerIdUseCase>();
 
 			// Service
 			services.AddScoped<MotelService>();

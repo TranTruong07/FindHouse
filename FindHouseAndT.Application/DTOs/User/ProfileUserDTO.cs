@@ -1,4 +1,6 @@
-﻿namespace FindHouseAndT.WebApp.DTOs
+﻿using Microsoft.AspNetCore.Http;
+
+namespace FindHouseAndT.Application.DTOs
 {
     public class ProfileUserDTO
     {

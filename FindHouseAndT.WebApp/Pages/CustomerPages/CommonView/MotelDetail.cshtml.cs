@@ -1,5 +1,5 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.WebApp.DTOs;
+using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -35,7 +35,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CommonView
                         IdMotel = motel.IdMotel,
                         QuantityRoom = motel.QuantityRoom,
                         Name = motel.Name,
-                        ImageMotel = await _amazonService.GetPreSignedUrl(motel.KeyImageMotel)
+                        ImageMotel = await _amazonService.GetPreSignedUrlAsync(motel.KeyImageMotel)
                     };
                     foreach (var room in motel.Rooms)
                     {
@@ -49,7 +49,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CommonView
                             Price = room.Price,
                             Status = room.Status,
                             RoomCode = room.RoomCode,
-                            UrlImageRoom = await _amazonService.GetPreSignedUrl(room.KeyImageRoom)
+                            UrlImageRoom = await _amazonService.GetPreSignedUrlAsync(room.KeyImageRoom)
                         });
                     }
                 }
