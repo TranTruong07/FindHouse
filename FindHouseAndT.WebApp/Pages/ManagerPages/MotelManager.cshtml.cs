@@ -25,21 +25,7 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
         public List<MotelManagerDTO> ListMotel { get; set; } = new List<MotelManagerDTO>();
         public async Task OnGetAsync()
         {
-            var motels = await _MotelService.GetAllMotelAsync();
-            foreach (var motel in motels)
-            {
-                ListMotel.Add(new MotelManagerDTO()
-                {
-					IdMotel = motel.IdMotel,
-					Address = motel.Address,
-					Description1 = motel.Description1,
-					Description2 = motel.Description2,
-					Name = motel.Name,
-					QuantityRoom = motel.QuantityRoom,
-					ImageMotel = await _AwsService.GetPreSignedUrlAsync(motel.KeyImageMotel)
-				});
-
-			}    
+            ListMotel = await _MotelService.GetAllMotelAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -47,35 +33,26 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
 			var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
 			if (ModelState.IsValid && userIdClaim != null)
             {
+                MotelManagerDTO.IdHouseOwner = Guid.Parse(userIdClaim.Value);
 				if (MotelManagerDTO.IdMotel.Equals(Guid.Empty))
 				{
-					var keyImage = await _AwsService.UploadImageToAWSAsync(MotelManagerDTO.ImageFIle);
-                    if(keyImage != null)
-                    {
-						Motel motel = new Motel() 
-                        { 
-                            Name = MotelManagerDTO.Name, 
-                            Address = MotelManagerDTO.Address, 
-                            Description1 = MotelManagerDTO.Description1, 
-                            IdHouseOwner = Guid.Parse(userIdClaim.Value), 
-                            KeyImageMotel = keyImage, 
-                            QuantityRoom = MotelManagerDTO.QuantityRoom,
-                            Description2 = MotelManagerDTO.Description2,
-                        };
-                        ResultStatus result =  await _MotelService.CreateMotelAsync(motel);
-                        if(result.ResultCode == ResultCode.Success)
-                        {
-                            return RedirectToPage("/ManagerPages/MotelManager");
-                        }
+                    MotelManagerDTO.IdHouseOwner = Guid.Parse(userIdClaim.Value);
+                    ResultStatus result = await _MotelService.CreateMotelAsync(MotelManagerDTO);
+					if (result.ResultCode == ResultCode.Success)
+					{
+						return RedirectToPage("/ManagerPages/MotelManager");
 					}
-
 				}
-                //else
-                //{
-                //    // update
-                //}
+                else
+                {
+                    ResultStatus result = await _MotelService.UpdateMotel(MotelManagerDTO);
+                    if (result.ResultCode == ResultCode.Success)
+                    {
+                        return RedirectToPage("/ManagerPages/MotelManager");
+                    }
+                }
 
-			}
+            }
            
             return Page();
         }

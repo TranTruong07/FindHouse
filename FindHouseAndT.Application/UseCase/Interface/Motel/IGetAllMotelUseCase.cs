@@ -9,6 +9,6 @@ namespace FindHouseAndT.Application.UseCase
 {
 	public interface IGetAllMotelUseCase
 	{
-		Task<IEnumerable<Motel>> ExecuteAsync();
+		Task<List<Motel>> ExecuteAsync();
 	}
 }

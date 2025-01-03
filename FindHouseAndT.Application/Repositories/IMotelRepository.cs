@@ -5,7 +5,7 @@ namespace FindHouseAndT.Application.Repositories
     public interface IMotelRepository
     {
         Task CreateMotelAsync(Motel motel);
-        Task UpdateMotelAsync(Motel motel);
+        void UpdateMotel(Motel motel);
         Task<List<Motel>> GetAllMotelAsync();
         Motel? GetMotelById(Guid id);
         Task DeleteMotelAsync(Motel motel);

@@ -24,6 +24,8 @@ namespace FindHouseAndT.WebApp.Extensions
             // UseCase Common
             services.AddScoped<IAWSUploadImageUseCase, AWSUploadImageUseCase>();
             services.AddScoped<IGetPreSignedUrlUseCase, GetPreSignedUrlUseCase>();
+            services.AddScoped<IUpdateMotelUseCase, UpdateMotelUseCase>();
+
 
             // UseCase Motel
             services.AddScoped<ICreateMotelUseCase,  CreateMotelUseCase>();

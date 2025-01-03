@@ -11,9 +11,9 @@ namespace FindHouseAndT.Application.UseCase
 		{
 			_repository = repository;
 		}
-		public async Task<IEnumerable<Motel>> ExecuteAsync()
+		public Task<List<Motel>> ExecuteAsync()
 		{
-			return await _repository.GetAllMotelAsync();
+			return _repository.GetAllMotelAsync();
 		}
 	}
 }

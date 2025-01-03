@@ -19,21 +19,7 @@ namespace FindHouseAndT.WebApp.Pages
 
         public async Task OnGet()
         {
-            var listMotel = await _motelService.GetAllMotelAsync();
-            foreach (var motel in listMotel)
-            {
-                ListMotels.Add(new MotelManagerDTO
-                {
-                    Address = motel.Address,
-                    IdMotel = motel.IdMotel,
-                    Description1 = motel.Description1,
-                    Description2 = motel.Description2,
-                    IdHouseOwner = motel.IdHouseOwner,
-                    Name = motel.Name,
-                    QuantityRoom = motel.QuantityRoom,
-                    ImageMotel = await _amazonService.GetPreSignedUrlAsync(motel.KeyImageMotel)
-                });
-			}
+            ListMotels = await _motelService.GetAllMotelAsync();
         }
         public void OnPost(Guid idMotel)
         {

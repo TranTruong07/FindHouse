@@ -13,7 +13,7 @@
 <div class="container">
     <div class="position-relative" style="height: 50px;">
         <div class="position-absolute top-0 end-0 m-2">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#addMotelModal">Add</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMotelModal">Add/Update</button>
         </div>
     </div>
     <!-- Modal -->
@@ -29,6 +29,7 @@
                 <div class="modal-body">
                     <!-- Form thêm Motel -->
                     <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="MotelManagerDTO.IdMotel" class="form-control" id="motelId">
                         <div class="form-group">
                             <label for="motelName">Name</label>
                             <input asp-for="MotelManagerDTO.Name" class="form-control" id="motelName" required>
@@ -51,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="motelKeyImage">Image Motel</label>
-                            <input type="file" asp-for="MotelManagerDTO.ImageFIle" class="form-control" id="motelKeyImage" required>
+                            <input type="file" asp-for="MotelManagerDTO.ImageFIle" class="form-control" id="motelKeyImage">
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -78,7 +79,7 @@
                 @foreach(var motel in Model.ListMotel)
                 {
                     <tr>
-                        <td><input type="checkbox" name=""></td>
+                        <td><input type="checkbox" class="select-motel" value="@motel.IdMotel"></td>
                         <td>@motel.IdMotel</td>
                         <td>@motel.Name</td>
                         <td>@motel.Address</td>
@@ -93,5 +94,34 @@
         </table>
     </div>
 </div>
+@section ScriptSection{
+    <script>
+        document.querySelectorAll('.select-motel').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    // Lấy dòng tương ứng với checkbox đã chọn
+                    var row = this.closest('tr');
 
+                    // Lấy các giá trị trong hàng
+                    var idMotel = row.cells[1].innerText;
+                    var name = row.cells[2].innerText;
+                    var address = row.cells[3].innerText;
+                    var quantityRoom = row.cells[4].innerText;
+                    var description1 = row.cells[6].innerText;
+                    var description2 = row.cells[7].innerText;
+
+                    // Điền các giá trị vào form
+                    document.getElementById('motelName').value = name;
+                    document.getElementById('motelAddress').value = address;
+                    document.getElementById('motelQuantityRoom').value = quantityRoom;
+                    document.getElementById('motelDescription1').value = description1;
+                    document.getElementById('motelDescription2').value = description2;
+                    document.getElementById('motelId').value = this.value
+
+                }
+            });
+        });
+    </script>
+
+}
 

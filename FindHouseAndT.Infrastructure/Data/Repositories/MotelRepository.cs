@@ -34,10 +34,9 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return _houseDbContext.Motels.Include(x => x.HouseOwner).Where(x => x.IdMotel.Equals(id)).Include(x => x.Rooms).FirstOrDefault();
         }
 
-        public Task UpdateMotelAsync(Motel motel)
+        public void UpdateMotel(Motel motel)
         {
             _houseDbContext.Motels.Update(motel);
-            return Task.CompletedTask;
         }
     }
 }
