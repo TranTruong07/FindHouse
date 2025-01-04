@@ -6,7 +6,8 @@ namespace FindHouseAndT.Application.DTOs
 	public class BookRequestDTO
 	{
 		public Guid IdCustomer { get; set; }
-		public string RoomCode { get; set; }
+		public int RoomId { get; set; }
+		public string? RoomCode { get; set; }
 		[Required]
 		public string FullName { get; set; }
 		[Required]
@@ -20,6 +21,6 @@ namespace FindHouseAndT.Application.DTOs
 		[Required]
 		public IFormFile ImgBackCCCD { get; set; }
 		public string? Note { get; set; }
-		public string Status {  get; set; }
+		public string? Status {  get; set; }
 	}
 }

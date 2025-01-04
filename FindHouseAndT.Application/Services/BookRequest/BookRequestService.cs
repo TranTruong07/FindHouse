@@ -21,14 +21,32 @@ namespace FindHouseAndT.Application.Services
 			this.amazonService = amazonService;
 		}
 
-		public async Task<ResultStatus> CreateNewBookRequestAsync(BookRequest bookRequest)
+		public async Task<ResultStatus> CreateNewBookRequestAsync(BookRequestDTO bookRequestDTO)
 		{
-			await createBookRequestUseCase.ExecuteAsync(bookRequest);
-			var result = await unitOfWork.CommitAsync();
-			if(result != 0)
+            var keyImgBack = await amazonService.UploadImageToAWSAsync(bookRequestDTO.ImgBackCCCD);
+            var keyImgFront = await amazonService.UploadImageToAWSAsync(bookRequestDTO.ImgFrontCCCD);
+			if(keyImgBack != null && keyImgFront != null)
 			{
-				return ResultStatus.Success;
-			}
+                var bookRequest = new BookRequest()
+                {
+                    Address = bookRequestDTO.Address,
+                    DateOfBirth = bookRequestDTO.DateOfBirth,
+                    FullName = bookRequestDTO.FullName,
+                    IdCustomer = bookRequestDTO.IdCustomer,
+                    RoomId = bookRequestDTO.RoomId,
+                    Status = BookRequestStatus.WaitForAccept,
+                    KeyUrlBackCCCD = keyImgBack,
+                    KeyUrlFrontCCCD = keyImgFront,
+                    Note = bookRequestDTO.Note
+                };
+                //Create Book Request
+                await createBookRequestUseCase.ExecuteAsync(bookRequest);
+                var result = await unitOfWork.CommitAsync();
+                if (result != 0)
+                {
+                    return ResultStatus.Success;
+                }
+            }
 			return ResultStatus.Failure;
 		}
 
@@ -45,10 +63,11 @@ namespace FindHouseAndT.Application.Services
 					FullName = br.FullName,
 					IdCustomer = customerId,
 					Note = br.Note,
-					RoomCode = br.RoomCode,
+					RoomId = br.RoomId,
 					UrlBackCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlBackCCCD),
 					UrlFrontCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlFrontCCCD),
-					Status = br.Status
+					Status = br.Status,
+					RoomCode = br.Room.RoomCode
 				});
 			}
 			return list;

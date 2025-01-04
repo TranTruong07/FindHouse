@@ -48,7 +48,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 					return RedirectToPage("/CustomerPages/CommonView/AccessDenied");
 				}
 				BookRequestDTO.DateOfBirth = customer.BirthDate ?? new DateOnly();
-				BookRequestDTO.RoomCode = room.RoomCode;
+				BookRequestDTO.RoomId = room.ID;
 				BookRequestDTO.FullName = customer.Name;
 				return Page();
 			}
@@ -63,30 +63,12 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 			var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
 			if (userIdClaim != null && ModelState.IsValid)
 			{
-				var keyImgBack = await amazonService.UploadImageToAWSAsync(BookRequestDTO.ImgBackCCCD);
-				var keyImgFront = await amazonService.UploadImageToAWSAsync(BookRequestDTO.ImgFrontCCCD);
-				if (keyImgBack != null && keyImgFront != null)
-				{
-					var bookRequest = new BookRequest()
-					{
-						Address = BookRequestDTO.Address,
-						DateOfBirth = BookRequestDTO.DateOfBirth,
-						FullName = BookRequestDTO.FullName,
-						IdCustomer = Guid.Parse(userIdClaim.Value),
-						RoomCode = BookRequestDTO.RoomCode,
-						Status = BookRequestStatus.WaitForAccept,
-						KeyUrlBackCCCD = keyImgBack,
-						KeyUrlFrontCCCD = keyImgFront,
-						Note = BookRequestDTO.Note
-					};
-					//Create Book Request
-					var result = await bookRequestService.CreateNewBookRequestAsync(bookRequest);
-					if(result.ResultCode == ResultCode.Success)
-					{
-						return RedirectToPage("/CustomerPages/CustomerView/ListBookRequest");
-					}
-				}
-
+				BookRequestDTO.IdCustomer = Guid.Parse(userIdClaim.Value);
+                var result = await bookRequestService.CreateNewBookRequestAsync(BookRequestDTO);
+                if (result.ResultCode == ResultCode.Success)
+                {
+                    return RedirectToPage("/CustomerPages/CustomerView/ListBookRequest");
+                }
 			}
 			var br = BookRequestDTO;
 			return RedirectToPage("/CustomerPages/CommonView/AccessDenied");

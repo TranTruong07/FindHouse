@@ -33,27 +33,31 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
         {
             if (ModelState.IsValid)
             {
-                var keyImage = await _AwsService.UploadImageToAWSAsync(RoomManagerDTO.ImageRoom);
-                if (keyImage != null)
+                if(RoomManagerDTO.Id == 0)
                 {
-                    var room = new Room()
+                    var room = await _roomService.GetRoomByRoomCodeAsync(RoomManagerDTO.OldRoomCode);
+                    if (room == null)
                     {
-                        RoomCode = RoomManagerDTO.RoomCode,
-                        Description1 = RoomManagerDTO.Description1,
-                        KeyImageRoom = keyImage,
-                        Status = RoomStatus.Available,
-                        Description2 = RoomManagerDTO.Description2,
-                        Floor = RoomManagerDTO.Floor,
-                        Area = RoomManagerDTO.Area,
-                        Price = RoomManagerDTO.Price,
-                        IdMotel = RoomManagerDTO.IdMotel,
-                    };
-                    ResultStatus result = await _roomService.CreateNewRoomAsync(room);
-                    if(result.ResultCode == ResultCode.Success)
+                        ResultStatus result = await _roomService.CreateNewRoomAsync(RoomManagerDTO);
+                        if (result.ResultCode == ResultCode.Success)
+                        {
+                            return RedirectToPage("/ManagerPages/RoomManager");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Duplicate", "RoomCode is duplicate");
+                    }
+                }
+                else
+                {
+                    ResultStatus result = await _roomService.UpdateRoomAsync(RoomManagerDTO);
+                    if (result.ResultCode == ResultCode.Success)
                     {
                         return RedirectToPage("/ManagerPages/RoomManager");
                     }
                 }
+                
             }
             var ListMotel = await _motelService.GetAllMotelAsync();
             ViewData["Motels"] = new SelectList(ListMotel, "IdMotel", "Name");
@@ -71,6 +75,7 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
                 {
                     rooms.Add(new RoomManagerDTO()
                     {
+                        Id = room.ID,
                         RoomCode = room.RoomCode,
                         Area = room.Area,
                         Price = room.Price,

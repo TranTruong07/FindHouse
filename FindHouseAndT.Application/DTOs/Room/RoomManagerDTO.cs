@@ -5,8 +5,10 @@ namespace FindHouseAndT.Application.DTOs
 {
     public class RoomManagerDTO
     {
+        public int Id { get; set; }
         [Required]
         public string RoomCode { get; set; }
+        public string OldRoomCode { get; set; }
         [Required]
         public int Floor { get; set; }
         [Required]

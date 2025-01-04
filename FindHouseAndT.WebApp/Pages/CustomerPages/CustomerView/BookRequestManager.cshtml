@@ -41,7 +41,7 @@
 							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Book Room @Model.RoomManagerDTO.RoomCode</h3>
 
 							<form class="px-md-2" method="post" enctype="multipart/form-data">
-								<input type="hidden" asp-for="@Model.BookRequestDTO.RoomCode" />
+								<input type="hidden" asp-for="@Model.BookRequestDTO.RoomId" />
 								<div data-mdb-input-init class="form-outline mb-4">
 									<label class="form-label" for="form3Example1q">FullName</label>
 									<input asp-for="@Model.BookRequestDTO.FullName" id="form3Example1q" class="form-control" />

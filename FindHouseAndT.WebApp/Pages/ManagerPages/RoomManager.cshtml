@@ -32,6 +32,8 @@
                 <div class="modal-body">
                     <!-- Form thêm Motel -->
                     <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="RoomManagerDTO.OldRoomCode"  id="OldRoomCode">
+                        <input type="hidden" asp-for="RoomManagerDTO.Id"  id="IdRoom">
                         <div class="form-group">
                             <label for="motelName">Code Room</label>
                             <input asp-for="RoomManagerDTO.RoomCode" class="form-control" id="RoomCode" required>
@@ -66,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label for="motelKeyImage">Image Room</label>
-                            <input type="file" asp-for="RoomManagerDTO.ImageRoom" class="form-control" id="motelKeyImage" required>
+                            <input type="file" asp-for="RoomManagerDTO.ImageRoom" class="form-control" id="motelKeyImage">
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -84,6 +86,7 @@
             <thead>
                 <tr>
                     <th></th>
+                    <th>ID</th>
                     <th>Code Room</th>
                     <th>Number of Floor</th>
                     <th>Area</th>
@@ -119,6 +122,7 @@
                             $.each(response, function (index, room) {
                                 $('#roomTableBody').append('<tr>' +
                                     '<td><input type="checkbox" class="select-room" value="'+ motelId+'"></td>' +
+                                    '<td>' + room.id + '</td>' +
                                     '<td>' + room.roomCode + '</td>' +
                                     '<td>' + room.floor + '</td>' +
                                     '<td>' + room.area + '</td>' +
@@ -146,12 +150,13 @@
             if (this.checked) {
                 var row = this.closest('tr');
 
-                var roomCode = row.cells[1].innerText;
-                var floor = row.cells[2].innerText;
-                var area = row.cells[3].innerText;
-                var description1 = row.cells[5].innerText;
-                var description2 = row.cells[6].innerText;
-                var price = row.cells[7].innerText;
+                var id = row.cells[1].innerText;
+                var roomCode = row.cells[2].innerText;
+                var floor = row.cells[3].innerText;
+                var area = row.cells[4].innerText;
+                var description1 = row.cells[6].innerText;
+                var description2 = row.cells[7].innerText;
+                var price = row.cells[8].innerText;
                 var motelId = this.value;
 
                 // Điền dữ liệu vào form
@@ -162,6 +167,8 @@
                 document.getElementById('motelDescription2').value = description2;
                 document.getElementById('Price').value = price;
                 document.getElementById('selectMotel').value = motelId;
+                document.getElementById('OldRoomCode').value = roomCode;
+                document.getElementById('IdRoom').value = id;
             }
         });
     </script>

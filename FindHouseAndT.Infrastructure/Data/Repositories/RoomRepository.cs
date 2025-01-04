@@ -35,15 +35,19 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return _houseDbContext.Rooms.Where(x => x.IdMotel.Equals(motelId)).Include(x => x.Motel).ToListAsync();
         }
 
-        public  Task<Room?> GetRoomByIdAsync(string roomCode)
+        public Task<Room?> GetRoomByIdAsync(int Id)
+        {
+            return _houseDbContext.Rooms.Where(x => x.ID == Id).FirstOrDefaultAsync();
+        }
+
+        public  Task<Room?> GetRoomByRoomCodeAsync(string roomCode)
         {
             return _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
         }
 
-        public Task UpdateRoomAsync(Room room)
+        public void UpdateRoom(Room room)
         {
             _houseDbContext.Rooms.Update(room);
-            return Task.CompletedTask;
         }
     }
 }

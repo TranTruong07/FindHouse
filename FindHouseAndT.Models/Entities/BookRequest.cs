@@ -10,7 +10,7 @@ namespace FindHouseAndT.Models.Entities
     {
         public int Id { get; set; }
         public required Guid IdCustomer { get; set; }
-        public required string RoomCode { get; set; }
+        public required int RoomId { get; set; }
 		public required string FullName { get; set; }
 		public required DateOnly DateOfBirth { get; set; }
 		public required string Address { get; set; }

@@ -14,7 +14,7 @@ namespace FindHouseAndT.Application.UseCase
 
 		public Task<Room?> ExecuteAsync(string roomCode)
 		{
-			return roomRepository.GetRoomByIdAsync(roomCode);
+			return roomRepository.GetRoomByRoomCodeAsync(roomCode);
 		}
 	}
 }

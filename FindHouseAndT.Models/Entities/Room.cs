@@ -3,6 +3,7 @@ namespace FindHouseAndT.Models.Entities
 {
     public class Room
     {
+        public int ID { get; set; }
         public required string RoomCode { get; set; }
         public int Floor {  get; set; }
         public double Area { get; set; }
