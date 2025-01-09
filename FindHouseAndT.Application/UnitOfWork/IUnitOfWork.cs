@@ -9,7 +9,6 @@ namespace FindHouseAndT.Application.UnitOfWork
         IMotelRepository MotelRepository { get; set; }
         IOrderRepository OrderRepository { get; set; }
         IRoomRepository RoomRepository { get; set; }
-        IUserAppRepository UserAppRepository { get; set; }
         Task<int> CommitAsync();
     }
 }

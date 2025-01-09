@@ -4,6 +4,7 @@ using FindHouseAndT.Infrastructure.Data.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindHouseAndT.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(FindHouseDbContext))]
-    partial class FindHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109155746_UpdateEntityBookRequest2")]
+    partial class UpdateEntityBookRequest2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -16,6 +16,8 @@ namespace FindHouseAndT.Models.Entities
 		public required string Address { get; set; }
         public required string KeyUrlFrontCCCD { get; set; }
         public required string KeyUrlBackCCCD { get; set; }
+        public required DateOnly StartTimeBook { get; set; }
+        public required DateOnly EndTimeBook { get; set; }
         public string? Note {  get; set; }
         public required string Status { get; set; }
         public Customer? Customer { get; set; }

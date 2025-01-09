@@ -10,18 +10,20 @@ namespace FindHouseAndT.Application.Services
 	{
 		private readonly ICreateBookRequestUseCase createBookRequestUseCase;
 		private readonly IGetBookRequestByCustomerIdUseCase getBookRequestByCustomerIdUseCase;
+		private readonly IGetAllBookRequestUseCase getAllBookRequestUseCase;
 		private readonly AWSService amazonService;
         private readonly IUnitOfWork unitOfWork;
 
-		public BookRequestService(ICreateBookRequestUseCase createBookRequestUseCase, AWSService amazonService, IGetBookRequestByCustomerIdUseCase getBookRequestByCustomerIdUseCase, IUnitOfWork unitOfWork)
+		public BookRequestService(ICreateBookRequestUseCase createBookRequestUseCase, IGetAllBookRequestUseCase getAllBookRequestUseCase, AWSService amazonService, IGetBookRequestByCustomerIdUseCase getBookRequestByCustomerIdUseCase, IUnitOfWork unitOfWork)
 		{
 			this.createBookRequestUseCase = createBookRequestUseCase;
 			this.unitOfWork = unitOfWork;
 			this.getBookRequestByCustomerIdUseCase = getBookRequestByCustomerIdUseCase;
 			this.amazonService = amazonService;
+			this.getAllBookRequestUseCase = getAllBookRequestUseCase;
 		}
 
-		public async Task<ResultStatus> CreateNewBookRequestAsync(BookRequestDTO bookRequestDTO)
+		public async Task<ResultStatus> CreateNewBookRequestAsync(BookRequestCreateDTO bookRequestDTO)
 		{
             var keyImgBack = await amazonService.UploadImageToAWSAsync(bookRequestDTO.ImgBackCCCD);
             var keyImgFront = await amazonService.UploadImageToAWSAsync(bookRequestDTO.ImgFrontCCCD);
@@ -37,7 +39,9 @@ namespace FindHouseAndT.Application.Services
                     Status = BookRequestStatus.WaitForAccept,
                     KeyUrlBackCCCD = keyImgBack,
                     KeyUrlFrontCCCD = keyImgFront,
-                    Note = bookRequestDTO.Note
+                    Note = bookRequestDTO.Note,
+					StartTimeBook = bookRequestDTO.StartTimeBook,
+					EndTimeBook = bookRequestDTO.EndTimeBook
                 };
                 //Create Book Request
                 await createBookRequestUseCase.ExecuteAsync(bookRequest);
@@ -50,13 +54,13 @@ namespace FindHouseAndT.Application.Services
 			return ResultStatus.Failure;
 		}
 
-        public async Task<List<BookRequestDTO>> GetAllBookRequestByCustomerIdAsync(Guid customerId)
+        public async Task<List<BookRequestCreateDTO>> GetAllBookRequestByCustomerIdAsync(Guid customerId)
         {
 			var bookRequest = await getBookRequestByCustomerIdUseCase.ExecuteAsync(customerId);
-			List<BookRequestDTO> list = new List<BookRequestDTO>();
+			List<BookRequestCreateDTO> list = new List<BookRequestCreateDTO>();
 			foreach(var br in bookRequest)
 			{
-				list.Add(new BookRequestDTO
+				list.Add(new BookRequestCreateDTO
 				{
 					Address = br.Address,
 					DateOfBirth = br.DateOfBirth,
@@ -71,6 +75,37 @@ namespace FindHouseAndT.Application.Services
 				});
 			}
 			return list;
+        }
+		public async Task<List<BookRequestShowListDTO>> GetAllBookRequestForShowListAsync()
+        {
+			try
+			{
+				var bookRequest = await getAllBookRequestUseCase.ExecuteAsync();
+				List<BookRequestShowListDTO> list = new List<BookRequestShowListDTO>();
+				foreach (var br in bookRequest)
+				{
+					list.Add(new BookRequestShowListDTO
+					{
+						Id = br.Id,
+						Address = br.Address,
+						DateOfBirth = br.DateOfBirth,
+						FullName = br.FullName,
+						IdCustomer = br.IdCustomer,
+						Note = br.Note,
+						UrlBackCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlBackCCCD),
+						UrlFrontCCCD = await amazonService.GetPreSignedUrlAsync(br.KeyUrlFrontCCCD),
+						Status = br.Status,
+						RoomCode = br.Room.RoomCode,
+						StartTimeBook = br.StartTimeBook,
+						EndTimeBook = br.EndTimeBook
+					});
+				}
+				return list;
+			}catch(Exception ex)
+			{
+                await Console.Out.WriteLineAsync(ex.Message);
+				return null;
+            }
         }
     }
 }

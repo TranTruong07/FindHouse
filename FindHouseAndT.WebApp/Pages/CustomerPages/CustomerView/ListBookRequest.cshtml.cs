@@ -18,7 +18,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
             this.bookRequestService = bookRequestService;
         }
 
-        public List<BookRequestDTO> Books { get; set; } = new List<BookRequestDTO>();
+        public List<BookRequestCreateDTO> Books { get; set; } = new List<BookRequestCreateDTO>();
         public async Task<IActionResult> OnGet()
         {
             var claimUserId = User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);

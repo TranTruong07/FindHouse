@@ -20,6 +20,11 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
 			return Task.CompletedTask;
 		}
 
+        public Task<List<BookRequest>> GetAllBookRequestAsync()
+        {
+            return _dbContext.BookRequests.Include(x => x.Room).ToListAsync();
+        }
+
         public Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId)
         {
             return _dbContext.BookRequests.Where(x => x.IdCustomer.Equals(customerId)).Include(x => x.Room).Include(x => x.Customer).ToListAsync();

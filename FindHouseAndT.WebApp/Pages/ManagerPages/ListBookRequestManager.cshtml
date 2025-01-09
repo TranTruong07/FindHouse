@@ -1,0 +1,112 @@
+﻿@page
+@model FindHouseAndT.WebApp.Pages.ManagerPages.ListBookRequestManagerModel
+@{
+	Layout = "_ManagerLayout";
+}
+@section StyleSection {
+    <style>
+        .modal-backdrop {
+            z-index: 150 !important;
+        }
+    </style>
+}
+<div class="container">
+    @* modal *@
+    <div class="modal fade" id="addMotelModal" tabindex="-1" role="dialog" aria-labelledby="addMotelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMotelModalLabel">Book Request Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Show information of book request -->
+                    <p><strong>Book Request ID: </strong> <span id="bookRequestId"></span></p>
+                    <p><strong>Full Name: </strong> <span id="fullName"></span></p>
+                    <p><strong>Date of Birth: </strong> <span id="dateOfBirth"></span></p>
+                    <p><strong>Address: </strong> <span id="address"></span></p>
+                    <p><strong>Room Code: </strong> <span id="roomCode"></span></p>
+                    <p><strong>Start Book: </strong> <span id="startTimeBook"></span></p>
+                    <p><strong>End Book: </strong> <span id="endTimeBook"></span></p>
+                    <p><strong>Font CCCD: </strong></p><br />
+                    <img id="urlFrontCCCD" style="max-width: 200px" />
+                    <p><strong>End CCCD: </strong></p><br />
+                    <img id="urlBackCCCD" style="max-width: 200px" />
+                    <p><strong>Note: </strong> <span id="note"></span></p>
+                    <p><strong>Status: </strong> <span id="status"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Room</th>
+                    <th>Date Of Birth</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var br in Model.ListBookRequest)
+                {
+                    <tr>
+                        <td>@br.Id</td>
+                        <td>@br.FullName</td>
+                        <td>@br.RoomCode</td>
+                        <td>@br.DateOfBirth</td>
+                        <td>@br.Note</td>
+                        <td>@br.Status</td>
+                        <td><button class="btn btn-primary show-book-request" data-id="@br.Id">Show</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section ScriptSection{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.show-book-request').on('click', function () {
+                let brId = $(this).data('id');
+                $.ajax({
+                    url: '/ManagerPages/ListBookRequestManager?handler=LoadBookRequest',
+                    type: 'GET',
+                    data: {BookRequestId : brId},
+                    success: function (response){
+                        $('#bookRequestId').text(response.id);
+                        $('#fullName').text(response.fullName);
+                        $('#roomCode').text(response.roomCode);
+                        $('#dateOfBirth').text(response.dateOfBirth);
+                        $('#address').text(response.address);
+                        $('#startTimeBook').text(response.startTimeBook);
+                        $('#endTimeBook').text(response.endTimeBook);
+
+                        // Hiển thị hình ảnh Front và Back CCCD
+                        $('#urlFrontCCCD').attr('src', response.urlFrontCCCD);
+                        $('#urlBackCCCD').attr('src', response.urlBackCCCD);
+
+                        $('#note').text(response.note);
+                        $('#status').text(response.status);
+
+                        // Hiển thị modal
+                        $('#addMotelModal').modal('show');
+                    },
+                    error: function () {
+                        alert('Error load book request');
+                    }
+                });
+            });
+        });
+    
+    </script>
+}

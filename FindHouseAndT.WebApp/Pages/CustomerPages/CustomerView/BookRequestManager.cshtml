@@ -71,6 +71,16 @@
 									<span asp-validation-for="@Model.BookRequestDTO.ImgBackCCCD" class="text-danger"></span>
 								</div>
 								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Book Start Time</label>
+									<input asp-for="@Model.BookRequestDTO.StartTimeBook" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.StartTimeBook" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Book End Time</label>
+									<input asp-for="@Model.BookRequestDTO.EndTimeBook" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.EndTimeBook" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
 									<label class="form-label" for="form3Example1q">Note</label>
 									<textarea asp-for="@Model.BookRequestDTO.Note" id="form3Example1q" class="form-control"></textarea>
 									<span asp-validation-for="@Model.BookRequestDTO.Note" class="text-danger"></span>

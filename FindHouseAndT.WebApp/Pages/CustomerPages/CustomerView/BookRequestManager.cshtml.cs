@@ -1,5 +1,4 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
 using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +26,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 		}
 		public RoomManagerDTO RoomManagerDTO { get; set; } = new RoomManagerDTO();
 		[BindProperty]
-		public BookRequestDTO BookRequestDTO { get; set; } = new BookRequestDTO();
+		public BookRequestCreateDTO BookRequestDTO { get; set; } = new BookRequestCreateDTO();
 
 		public async Task<IActionResult> OnGetAsync()
 		{
