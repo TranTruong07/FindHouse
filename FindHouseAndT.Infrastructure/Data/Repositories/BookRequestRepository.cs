@@ -25,12 +25,17 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             return _dbContext.BookRequests.Include(x => x.Room).ToListAsync();
         }
 
-        public Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId)
+		public Task<BookRequest?> GetBookRequestById(int id)
+		{
+			return _dbContext.BookRequests.Where(x => x.Id == id).Include(x => x.Room).SingleOrDefaultAsync();
+		}
+
+		public Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId)
         {
             return _dbContext.BookRequests.Where(x => x.IdCustomer.Equals(customerId)).Include(x => x.Room).Include(x => x.Customer).ToListAsync();
         }
 
-        public void UpdateBookRequestAsync(BookRequest bookRequest)
+        public void UpdateBookRequest(BookRequest bookRequest)
 		{
 			_dbContext.Update(bookRequest);
 		}

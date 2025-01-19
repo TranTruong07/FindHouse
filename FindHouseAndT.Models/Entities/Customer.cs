@@ -13,7 +13,7 @@ namespace FindHouseAndT.Models.Entities
         public DateOnly? BirthDate { get; set; }
         public string? Avatar {  get; set; }
         public UserApp? UserApp { get; set; }
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
         public ICollection<BookRequest> BookRequests { get; set; } = new List<BookRequest>();
     }
 }

@@ -1,0 +1,137 @@
+﻿@page
+@model FindHouseAndT.WebApp.Pages.ManagerPages.CreateContractModel
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FindHouseAndT.WebApp</title>
+
+
+	<!-- <link rel="manifest" href="site.webmanifest"> -->
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+	<!-- Place favicon.ico in the root directory -->
+	<!-- CSS here -->
+	<link rel="stylesheet" href="~/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="~/css/magnific-popup.css">
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/themify-icons.css">
+	<link rel="stylesheet" href="~/css/nice-select.css">
+	<link rel="stylesheet" href="~/css/flaticon.css">
+	<link rel="stylesheet" href="~/css/gijgo.css">
+	<link rel="stylesheet" href="~/css/animate.css">
+	<link rel="stylesheet" href="~/css/slicknav.css">
+	<link rel="stylesheet" href="~/css/style.css">
+
+</head>
+<body>
+	<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-lg-9 col-xl-7">
+					<div  class="card rounded-3">
+						<div style="text-align: center; margin-top:10px;">
+							<h1>CONTRACT</h1>
+						</div>
+						<div class="card-body p-4 p-md-5">
+							<form class="px-md-2" method="post">
+								<input type="hidden" asp-for="@Model.createContractDTO.IdCustomer" />
+								<input type="hidden" asp-for="@Model.createContractDTO.IdRoom" />
+								<input type="hidden" asp-for="@Model.createContractDTO.BookRequestId" />
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Room</label>
+									<h5>@(Model.createContractDTO.Room != null ? Model.createContractDTO.Room.RoomCode : "No Room Code")</h5>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">FullName Landlord</label>
+									<input asp-for="@Model.createContractDTO.FullNameHouseOwner" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.FullNameHouseOwner" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">FullName Tenant</label>
+									<input asp-for="@Model.createContractDTO.FullNameCustomer" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.FullNameCustomer" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Phone Landlord</label>
+									<input asp-for="@Model.createContractDTO.PhoneHouseOwner" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.PhoneHouseOwner" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Phone Tenant</label>
+									<input asp-for="@Model.createContractDTO.PhoneCustomer" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.PhoneCustomer" class="text-danger"></span>
+								</div>
+
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Day Of Start Book</label>
+									<input asp-for="@Model.createContractDTO.StartDate" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.StartDate" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Day Of End Book</label>
+									<input asp-for="@Model.createContractDTO.EndDate" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.EndDate" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Day Of Create Contract</label>
+									<input asp-for="@Model.createContractDTO.BookDate" id="form3Example1q" class="form-control"/>
+									<span asp-validation-for="@Model.createContractDTO.BookDate" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Total Price</label>
+									<input asp-for="@Model.createContractDTO.Price" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.createContractDTO.Price" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Terms Of Contract</label>
+									<textarea class="form-control" asp-for="@Model.createContractDTO.TermsOfContract"></textarea>
+									<span asp-validation-for="@Model.createContractDTO.TermsOfContract" class="text-danger"></span>
+								</div>
+								<button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-lg mb-1">Submit</button>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- JS here -->
+	<script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="~/js/popper.min.js"></script>
+	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/owl.carousel.min.js"></script>
+	<script src="~/js/isotope.pkgd.min.js"></script>
+	<script src="~/js/ajax-form.js"></script>
+	<script src="~/js/waypoints.min.js"></script>
+	<script src="~/js/jquery.counterup.min.js"></script>
+	<script src="~/js/imagesloaded.pkgd.min.js"></script>
+	<script src="~/js/scrollIt.js"></script>
+	<script src="~/js/jquery.scrollUp.min.js"></script>
+	<script src="~/js/wow.min.js"></script>
+	<script src="~/js/nice-select.min.js"></script>
+	<script src="~/js/jquery.slicknav.min.js"></script>
+	<script src="~/js/jquery.magnific-popup.min.js"></script>
+	<script src="~/js/plugins.js"></script>
+	<script src="~/js/gijgo.min.js"></script>
+
+	<!--contact js-->
+	<script src="~/js/contact.js"></script>
+	<script src="~/js/jquery.ajaxchimp.min.js"></script>
+	<script src="~/js/jquery.form.js"></script>
+	<script src="~/js/jquery.validate.min.js"></script>
+	<script src="~/js/mail-script.js"></script>
+
+	<script src="~/js/main.js"></script>
+</body>
+</html>

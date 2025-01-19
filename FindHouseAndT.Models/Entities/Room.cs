@@ -14,7 +14,7 @@ namespace FindHouseAndT.Models.Entities
 		public required string KeyImageRoom { get; set; }
 		public Guid IdMotel { get; set; }
         public Motel? Motel { get; set; }
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
         public ICollection<BookRequest> BookRequests { get; set; } = new List<BookRequest>();
     }
 }

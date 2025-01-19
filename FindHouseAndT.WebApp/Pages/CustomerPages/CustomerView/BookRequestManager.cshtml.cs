@@ -4,6 +4,9 @@ using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
+using FindHouseAndT.Models.Entities;
+using FindHouseAndT.Application.ExternalInterface;
 
 namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 {
@@ -12,19 +15,22 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 	{
 		[BindProperty(SupportsGet = true)]
 		public string RoomCode { get; set; } = string.Empty;
-		private readonly RoomService roomService;
-		private readonly AWSService amazonService;
-		private readonly CustomerService customerService;
-		private readonly BookRequestService bookRequestService;
+		[BindProperty(SupportsGet = true)]
+		public Guid IdMotel { get; set; } = new Guid();
+		private readonly IRoomService roomService;
+		private readonly IFileStorageService amazonService;
+		private readonly ICustomerService customerService;
+		private readonly IBookRequestService bookRequestService;
+		private readonly UserManager<UserApp> userManager;
 
-		public BookRequestManagerModel(RoomService roomService, AWSService amazonService, CustomerService customerService, BookRequestService bookRequestService)
+		public BookRequestManagerModel(IRoomService roomService, UserManager<UserApp> userManager, IFileStorageService amazonService, ICustomerService customerService, IBookRequestService bookRequestService)
 		{
 			this.roomService = roomService;
 			this.amazonService = amazonService;
 			this.customerService = customerService;
 			this.bookRequestService = bookRequestService;
+			this.userManager = userManager;
 		}
-		public RoomManagerDTO RoomManagerDTO { get; set; } = new RoomManagerDTO();
 		[BindProperty]
 		public BookRequestCreateDTO BookRequestDTO { get; set; } = new BookRequestCreateDTO();
 
@@ -33,22 +39,7 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
 			var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
 			if (!string.IsNullOrEmpty(RoomCode) && userIdClaim != null)
 			{
-				var room = await roomService.GetRoomByRoomCodeAsync(RoomCode);
-				if (room == null)
-				{
-					return RedirectToPage("/CustomerPages/CommonView/AccessDenied");
-				}
-				RoomManagerDTO.RoomCode = room.RoomCode;
-				RoomManagerDTO.UrlImageRoom = await amazonService.GetPreSignedUrlAsync(room.KeyImageRoom);
-
-				var customer = await customerService.GetCustomerByIdAsync(Guid.Parse(userIdClaim.Value));
-				if (customer == null)
-				{
-					return RedirectToPage("/CustomerPages/CommonView/AccessDenied");
-				}
-				BookRequestDTO.DateOfBirth = customer.BirthDate ?? new DateOnly();
-				BookRequestDTO.RoomId = room.ID;
-				BookRequestDTO.FullName = customer.Name;
+				BookRequestDTO = await bookRequestService.GetInforBookRequestCreateDTOAsync(Guid.Parse(userIdClaim.Value), RoomCode, IdMotel);
 				return Page();
 			}
 			else
@@ -69,7 +60,6 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
                     return RedirectToPage("/CustomerPages/CustomerView/ListBookRequest");
                 }
 			}
-			var br = BookRequestDTO;
 			return RedirectToPage("/CustomerPages/CommonView/AccessDenied");
 		}
 	}

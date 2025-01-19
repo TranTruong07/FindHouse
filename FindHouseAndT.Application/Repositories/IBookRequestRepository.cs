@@ -10,8 +10,9 @@ namespace FindHouseAndT.Application.Repositories
 	public interface IBookRequestRepository
 	{
 		Task CreateBookRequestAsync(BookRequest bookRequest);
-		void UpdateBookRequestAsync(BookRequest bookRequest);
+		void UpdateBookRequest(BookRequest bookRequest);
 		Task<List<BookRequest>> GetBookRequestsByCustomerIdAsync(Guid customerId);
 		Task<List<BookRequest>> GetAllBookRequestAsync();
+		Task<BookRequest?> GetBookRequestById(int id);
 	}
 }

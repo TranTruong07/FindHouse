@@ -37,12 +37,12 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
 
         public Task<Room?> GetRoomByIdAsync(int Id)
         {
-            return _houseDbContext.Rooms.Where(x => x.ID == Id).FirstOrDefaultAsync();
+            return _houseDbContext.Rooms.Where(x =>  x.ID == Id).FirstOrDefaultAsync();
         }
 
-        public  Task<Room?> GetRoomByRoomCodeAsync(string roomCode)
+        public  Task<Room?> GetRoomByRoomCodeAndIdMotelAsync(string roomCode, Guid IdMotel)
         {
-            return _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode)).FirstOrDefaultAsync();
+            return _houseDbContext.Rooms.Where(x => x.RoomCode.Equals(roomCode) && x.IdMotel.Equals(IdMotel)).FirstOrDefaultAsync();
         }
 
         public void UpdateRoom(Room room)

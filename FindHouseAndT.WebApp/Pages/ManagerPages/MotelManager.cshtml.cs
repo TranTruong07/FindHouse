@@ -1,5 +1,4 @@
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.Models.Entities;
 using FindHouseAndT.Models.Helper;
 using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -11,12 +10,10 @@ namespace FindHouseAndT.WebApp.Pages.ManagerPages
     [Authorize(Roles = UserRole.Landlord)]
     public class MotelManagerModel : PageModel
     {
-        private readonly AWSService _AwsService;
-        private readonly MotelService _MotelService;
+        private readonly IMotelService _MotelService;
 
-		public MotelManagerModel(AWSService awsService, MotelService motelService)
+		public MotelManagerModel(IMotelService motelService)
 		{
-			_AwsService = awsService;
 			_MotelService = motelService;
 		}
 

@@ -11,14 +11,14 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
     [Authorize(Roles = UserRole.Customer)]
     public class ListBookRequestModel : PageModel
     {
-        private readonly BookRequestService bookRequestService;
+        private readonly IBookRequestService bookRequestService;
 
-        public ListBookRequestModel(BookRequestService bookRequestService)
+        public ListBookRequestModel(IBookRequestService bookRequestService)
         {
             this.bookRequestService = bookRequestService;
         }
 
-        public List<BookRequestCreateDTO> Books { get; set; } = new List<BookRequestCreateDTO>();
+        public List<BookRequestShowListDTO> Books { get; set; } = new List<BookRequestShowListDTO>();
         public async Task<IActionResult> OnGet()
         {
             var claimUserId = User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);
@@ -28,6 +28,18 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CustomerView
             }
             Books = await bookRequestService.GetAllBookRequestByCustomerIdAsync(Guid.Parse(claimUserId.Value));
             return Page();
+        }
+        [BindProperty(SupportsGet = true)]
+        public int BookRequestId { get; set; }
+        public async Task<IActionResult> OnGetLoadBookRequest()
+        {
+            if (BookRequestId != 0)
+            {
+                var list = await bookRequestService.GetAllBookRequestForShowListAsync();
+                var br = list.Where(x => x.Id == BookRequestId).SingleOrDefault();
+                return new JsonResult(br);
+            }
+            return new JsonResult("Error");
         }
     }
 }

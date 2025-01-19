@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FindHouseAndT.Application.UseCase
 {
-	public interface IGetRoomByRoomCodeUseCase
+	public interface IUpdateBookRequestUseCase
 	{
-		Task<Room?> ExecuteAsync(string  roomCode);
+		void Execute(BookRequest bookRequest);
 	}
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace FindHouseAndT.Models.Helper
 {
-    public class BookRequestStatus
+    public static class BookRequestStatus
     {
-        public static string WaitForAccept = "WaitForAccept";
-        public static string AcceptRequest = "AcceptRequest";
+        public const string WaitForAccept = "WaitForAccept";
+        public const string AcceptRequest = "AcceptRequest";
+        public const string RejectRequest = "RejectRequest";
     }
 }

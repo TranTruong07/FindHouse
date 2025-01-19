@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FindHouseAndT.Models.Helper
 {
-    public enum OrderStatus
+    public enum SignatureStatus
     {
     }
 }

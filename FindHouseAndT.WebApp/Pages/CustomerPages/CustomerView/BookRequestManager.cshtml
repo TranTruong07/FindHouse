@@ -34,11 +34,11 @@
 			<div class="row d-flex justify-content-center align-items-center h-100">
 				<div class="col-lg-9 col-xl-7">
 					<div class="card rounded-3">
-						<img src="@Model.RoomManagerDTO.UrlImageRoom"
+						<img src="@Model.BookRequestDTO.UrlRoom"
 							 class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
 							 alt="Sample photo">
 						<div class="card-body p-4 p-md-5">
-							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Book Room @Model.RoomManagerDTO.RoomCode</h3>
+							<h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Book Room @Model.BookRequestDTO.RoomCode</h3>
 
 							<form class="px-md-2" method="post" enctype="multipart/form-data">
 								<input type="hidden" asp-for="@Model.BookRequestDTO.RoomId" />
@@ -60,6 +60,16 @@
 									<span asp-validation-for="@Model.BookRequestDTO.Address" class="text-danger"></span>
 								</div>
 
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Email</label>
+									<input asp-for="@Model.BookRequestDTO.Email" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.Email" class="text-danger"></span>
+								</div>
+								<div data-mdb-input-init class="form-outline mb-4">
+									<label class="form-label" for="form3Example1q">Phone Number</label>
+									<input asp-for="@Model.BookRequestDTO.PhoneNumber" id="form3Example1q" class="form-control" />
+									<span asp-validation-for="@Model.BookRequestDTO.PhoneNumber" class="text-danger"></span>
+								</div>
 								<div data-mdb-input-init class="form-outline mb-4">
 									<label class="form-label" for="form3Example1q">Img Front CCCD</label>
 									<input asp-for="@Model.BookRequestDTO.ImgFrontCCCD" id="form3Example1q" class="form-control" />

@@ -10,7 +10,7 @@ namespace FindHouseAndT.Infrastructure.Data.ConfigurationModels
         {
             builder.HasKey(x => x.IdUser);
             builder.HasOne(x => x.UserApp).WithOne(x => x.Customer).HasForeignKey<Customer>(x => x.IdUser).OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(x => x.Orders).WithOne(x => x.Customer).HasForeignKey(x => x.IdCustomer).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.Contracts).WithOne(x => x.Customer).HasForeignKey(x => x.IdCustomer).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

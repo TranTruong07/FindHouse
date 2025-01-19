@@ -37,6 +37,10 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateOnly>("EndTimeBook")
                         .HasColumnType("date");
 
@@ -58,6 +62,10 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
@@ -75,6 +83,82 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("BookRequests");
+                });
+
+            modelBuilder.Entity("FindHouseAndT.Models.Entities.Contract", b =>
+                {
+                    b.Property<Guid>("ContractId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("BookDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("BookRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FullNameCustomer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullNameHouseOwner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdCustomer")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("IdRoom")
+                        .HasColumnType("int");
+
+                    b.Property<string>("KeyContract")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeySignatureCustomer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeySignatureHouseOwner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneCustomer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneHouseOwner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("StatusCustomer")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("StatusHouseOwner")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("TermsOfContract")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ContractId");
+
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdRoom");
+
+                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Customer", b =>
@@ -158,40 +242,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.ToTable("Motels");
                 });
 
-            modelBuilder.Entity("FindHouseAndT.Models.Entities.Order", b =>
-                {
-                    b.Property<Guid>("IdOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("IdCustomer")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("IdRoom")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
-                    b.HasKey("IdOrder");
-
-                    b.HasIndex("IdCustomer");
-
-                    b.HasIndex("IdRoom");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Room", b =>
                 {
                     b.Property<int>("ID")
@@ -235,7 +285,7 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
 
                     b.HasIndex("IdMotel");
 
-                    b.HasIndex("RoomCode")
+                    b.HasIndex("RoomCode", "IdMotel")
                         .IsUnique();
 
                     b.ToTable("Rooms");
@@ -471,6 +521,25 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("FindHouseAndT.Models.Entities.Contract", b =>
+                {
+                    b.HasOne("FindHouseAndT.Models.Entities.Customer", "Customer")
+                        .WithMany("Contracts")
+                        .HasForeignKey("IdCustomer")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FindHouseAndT.Models.Entities.Room", "Room")
+                        .WithMany("Contracts")
+                        .HasForeignKey("IdRoom")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Customer", b =>
                 {
                     b.HasOne("FindHouseAndT.Models.Entities.UserApp", "UserApp")
@@ -502,25 +571,6 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("HouseOwner");
-                });
-
-            modelBuilder.Entity("FindHouseAndT.Models.Entities.Order", b =>
-                {
-                    b.HasOne("FindHouseAndT.Models.Entities.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("IdCustomer")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FindHouseAndT.Models.Entities.Room", "Room")
-                        .WithMany("Orders")
-                        .HasForeignKey("IdRoom")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.Room", b =>
@@ -589,7 +639,7 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                 {
                     b.Navigation("BookRequests");
 
-                    b.Navigation("Orders");
+                    b.Navigation("Contracts");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.HouseOwner", b =>
@@ -606,7 +656,7 @@ namespace FindHouseAndT.Infrastructure.Data.Migrations
                 {
                     b.Navigation("BookRequests");
 
-                    b.Navigation("Orders");
+                    b.Navigation("Contracts");
                 });
 
             modelBuilder.Entity("FindHouseAndT.Models.Entities.UserApp", b =>

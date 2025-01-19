@@ -6,15 +6,11 @@ namespace FindHouseAndT.WebApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly MotelService _motelService;
-        private readonly AWSService _amazonService;
+        private readonly IMotelService _motelService;
         public List<MotelManagerDTO> ListMotels { get; set; } = new List<MotelManagerDTO>();
 
-        public IndexModel(ILogger<IndexModel> logger, MotelService motelService, AWSService aWS) {
-            _logger = logger;
+        public IndexModel(IMotelService motelService) {
             _motelService = motelService;
-            _amazonService = aWS;
         }
 
         public async Task OnGet()

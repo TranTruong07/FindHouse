@@ -78,7 +78,7 @@
                                         </ul>
                                         @if(room.Status == RoomStatus.Available)
                                         {
-                                            <a asp-page="/CustomerPages/CustomerView/BookRequestManager" asp-route-RoomCode="@room.RoomCode" class="book_now">book now</a>
+                                            <a asp-page="/CustomerPages/CustomerView/BookRequestManager" asp-route-RoomCode="@room.RoomCode" asp-route-IdMotel="@Model.Motel.IdMotel" class="book_now">book now</a>
                                         }
                                         else
                                         {

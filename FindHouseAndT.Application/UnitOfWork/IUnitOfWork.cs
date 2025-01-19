@@ -7,7 +7,7 @@ namespace FindHouseAndT.Application.UnitOfWork
         ICustomerRepository CustomerRepository { get; set; }
         IHouseOwnerRepository HouseOwnerRepository { get; set; }
         IMotelRepository MotelRepository { get; set; }
-        IOrderRepository OrderRepository { get; set; }
+        IContractRepository ContractRepository { get; set; }
         IRoomRepository RoomRepository { get; set; }
         Task<int> CommitAsync();
     }

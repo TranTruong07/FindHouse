@@ -2,6 +2,7 @@ using FindHouseAndT.Application.Services;
 using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using FindHouseAndT.Application.ExternalInterface;
 
 namespace FindHouseAndT.WebApp.Pages.CustomerPages.CommonView
 {
@@ -11,10 +12,10 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages.CommonView
         public Guid MotelId { get; set; }
         public MotelManagerDTO Motel { get; set; } = null!;
         public List<RoomManagerDTO> Rooms { get; set; } = new List<RoomManagerDTO>();
-        private readonly MotelService _motelService;
-        private readonly AWSService _amazonService;
+        private readonly IMotelService _motelService;
+        private readonly IFileStorageService _amazonService;
 
-        public MotelDetailModel(MotelService motelService, AWSService amazonService)
+        public MotelDetailModel(IMotelService motelService, IFileStorageService amazonService)
         {
             _motelService = motelService;
             _amazonService = amazonService;

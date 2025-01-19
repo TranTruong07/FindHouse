@@ -11,10 +11,10 @@ namespace FindHouseAndT.Application.UseCase
             this.repository = repository;
         }
 
-        public async Task<bool> ExecuteAsync(HouseOwner houseOwner)
+        public Task ExecuteAsync(HouseOwner houseOwner)
         {
-            await repository.CreateHouseOwnerAsync(houseOwner);
-            return true;
+            repository.CreateHouseOwnerAsync(houseOwner);
+            return Task.CompletedTask;
         }
     }
 }

@@ -9,17 +9,17 @@ namespace FindHouseAndT.Infrastructure.Data.UnitOfWork
         public ICustomerRepository CustomerRepository { get; set; }
         public IHouseOwnerRepository HouseOwnerRepository { get; set; }
         public IMotelRepository MotelRepository { get; set; }
-        public IOrderRepository OrderRepository { get; set; }
+        public IContractRepository ContractRepository { get; set; }
         public IRoomRepository RoomRepository { get; set; }
 
         private FindHouseDbContext context;
 
-        public UnitOfWork(ICustomerRepository customerRepository, IHouseOwnerRepository houseOwnerRepository, IMotelRepository motelRepository, IOrderRepository orderRepository, IRoomRepository roomRepository, FindHouseDbContext context)
+        public UnitOfWork(ICustomerRepository customerRepository, IHouseOwnerRepository houseOwnerRepository, IMotelRepository motelRepository, IContractRepository contractRepository, IRoomRepository roomRepository, FindHouseDbContext context)
         {
             CustomerRepository = customerRepository;
             HouseOwnerRepository = houseOwnerRepository;
             MotelRepository = motelRepository;
-            OrderRepository = orderRepository;
+			ContractRepository = contractRepository;
             RoomRepository = roomRepository;
             this.context = context;
         }

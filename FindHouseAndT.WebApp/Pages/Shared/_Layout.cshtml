@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="~/css/animate.css">
 	<link rel="stylesheet" href="~/css/slicknav.css">
 	<link rel="stylesheet" href="~/css/style.css">
-
+	@RenderSection("StyleSection", required: false)
 </head>
 <body>
 	<!-- header-start -->
@@ -280,7 +280,7 @@
 			</div>
 		</div>
 	</footer>
-
+	@RenderSection("ScriptSection", required: false);
 	<!-- JS here -->
 	<script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
 	<script src="~/js/vendor/jquery-1.12.4.min.js"></script>
@@ -310,6 +310,6 @@
 
 	<script src="~/js/main.js"></script>
 
-	@await RenderSectionAsync("Scripts", required: false)
+	
 </body>
 </html>

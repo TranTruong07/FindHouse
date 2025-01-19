@@ -1,4 +1,5 @@
 ﻿using FindHouseAndT.Application.DTOs;
+using FindHouseAndT.Application.ExternalInterface;
 using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
 using FindHouseAndT.Models.Entities;
@@ -6,23 +7,23 @@ using FindHouseAndT.Models.Helper;
 
 namespace FindHouseAndT.Application.Services
 {
-    public class MotelService
+    public class MotelService : IMotelService
     {
         private IUnitOfWork _unitOfWork;
         private IGetMotelByIdUseCase _getMotelByIdUseCase;
         private ICreateMotelUseCase _createMotelUseCase;
         private IGetAllMotelUseCase _getAllMotelUseCase;
         private IUpdateMotelUseCase _updateMotelUseCase;
-        private AWSService _aWSService;
+        private IFileStorageService _fileStorageService;
 
-        public MotelService(AWSService aWSService, IUpdateMotelUseCase updateMotelUseCase, IUnitOfWork unitOfWork, IGetMotelByIdUseCase getMotelByIdUseCase, ICreateMotelUseCase createMotelUseCase, IGetAllMotelUseCase getAllMotelUseCase)
+        public MotelService(IFileStorageService fileStorageService, IUpdateMotelUseCase updateMotelUseCase, IUnitOfWork unitOfWork, IGetMotelByIdUseCase getMotelByIdUseCase, ICreateMotelUseCase createMotelUseCase, IGetAllMotelUseCase getAllMotelUseCase)
         {
             _unitOfWork = unitOfWork;
             _getMotelByIdUseCase = getMotelByIdUseCase;
             _createMotelUseCase = createMotelUseCase;
             _getAllMotelUseCase = getAllMotelUseCase;
             _updateMotelUseCase = updateMotelUseCase;
-            _aWSService = aWSService;
+            _fileStorageService = fileStorageService;
         }
 
         public Motel? GetMotelById(Guid id)
@@ -32,7 +33,7 @@ namespace FindHouseAndT.Application.Services
 
         public async Task<ResultStatus> CreateMotelAsync(MotelManagerDTO motelDTO)
         {
-			var keyImage = await _aWSService.UploadImageToAWSAsync(motelDTO.ImageFIle);
+			var keyImage = await _fileStorageService.UploadImageAsync(motelDTO.ImageFIle);
             if(keyImage != null)
             {
 				Motel motel = new Motel()
@@ -68,7 +69,7 @@ namespace FindHouseAndT.Application.Services
 					Description2 = motel.Description2,
 					Name = motel.Name,
 					QuantityRoom = motel.QuantityRoom,
-					ImageMotel = await _aWSService.GetPreSignedUrlAsync(motel.KeyImageMotel)
+					ImageMotel = await _fileStorageService.GetPreSignedUrlAsync(motel.KeyImageMotel)
 				});
 			}
             return listMotel;
@@ -79,7 +80,7 @@ namespace FindHouseAndT.Application.Services
             var motel = _getMotelByIdUseCase.Execute(motelDTO.IdMotel);
             if(motel != null)
             {
-                var keyImg = await _aWSService.UploadImageToAWSAsync(motelDTO.ImageFIle);
+                var keyImg = await _fileStorageService.UploadImageAsync(motelDTO.ImageFIle);
                 if(keyImg != null)
                 {
                     motel.KeyImageMotel = keyImg;

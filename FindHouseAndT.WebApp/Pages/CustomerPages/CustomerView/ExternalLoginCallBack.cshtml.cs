@@ -12,9 +12,9 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 	{
 		private readonly SignInManager<UserApp> _signInManager;
 		private readonly UserManager<UserApp> _userManager;
-		private readonly CustomerService _customerService;
+		private readonly ICustomerService _customerService;
 
-		public ExternalLoginCallBackModel(SignInManager<UserApp> signInManager, UserManager<UserApp> userManager, CustomerService customerService)
+		public ExternalLoginCallBackModel(SignInManager<UserApp> signInManager, UserManager<UserApp> userManager, ICustomerService customerService)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
