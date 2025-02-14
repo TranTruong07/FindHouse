@@ -11,4 +11,8 @@
     <ProjectReference Include="..\FindHouseAndT.Models\FindHouseAndT.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\MailService\" />
+  </ItemGroup>
+
 </Project>

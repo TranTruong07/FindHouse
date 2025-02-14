@@ -6,6 +6,7 @@ using FindHouseAndT.Application.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using FindHouseAndT.Application.ExternalInterface;
 
 namespace FindHouseAndT.WebApp.Pages.CustomerPages
 {
@@ -17,9 +18,9 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 		public LoginDTO LoginDTO { get; set; } = new LoginDTO();
 		private readonly UserManager<UserApp> _userManager;
 		private readonly ICustomerService _customerService;
-		private readonly IMailService _mailService;
+		private readonly IEmailService _mailService;
 		private readonly SignInManager<UserApp> _signInManager;
-		public UserManagerModel(UserManager<UserApp> userManager, ICustomerService customerService, IMailService mailService, SignInManager<UserApp> signInManager)
+		public UserManagerModel(UserManager<UserApp> userManager, ICustomerService customerService, IEmailService mailService, SignInManager<UserApp> signInManager)
 		{
 			_userManager = userManager;
 			_customerService = customerService;

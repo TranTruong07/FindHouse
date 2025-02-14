@@ -3,11 +3,9 @@ using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Application.Services;
 using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
-using FindHouseAndT.Infrastructure.Data.MailService;
 using FindHouseAndT.Infrastructure.Data.Repositories;
 using FindHouseAndT.Infrastructure.Data.UnitOfWork;
 using FindHouseAndT.Infrastructure.ExternalServices;
-using FindHouseAndT.Models.MailKit;
 
 namespace FindHouseAndT.WebApp.Extensions
 {
@@ -50,7 +48,7 @@ namespace FindHouseAndT.WebApp.Extensions
 			services.AddScoped<IMotelService, MotelService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IFileStorageService, AWSFileStorageService>();
-            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IEmailService, MailService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IBookRequestService, BookRequestService>();
 

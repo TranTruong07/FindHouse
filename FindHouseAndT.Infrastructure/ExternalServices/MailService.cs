@@ -1,12 +1,13 @@
-﻿using FindHouseAndT.Models.Helper;
+﻿using FindHouseAndT.Application.ExternalInterface;
+using FindHouseAndT.Models.Helper;
 using FindHouseAndT.Models.MailKit;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace FindHouseAndT.Infrastructure.Data.MailService
+namespace FindHouseAndT.Infrastructure.ExternalServices
 {
-	public class MailService : IMailService
-	{
+	public class MailService : IEmailService
+    {
 		private MailSetting _setting;
 
 		public MailService(IOptions<MailSetting> setting)
