@@ -30,7 +30,7 @@
             <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a asp-page="/Index" class="text-nowrap logo-img">
+                    <a asp-page="/CustomerPages/CommonView/Index" class="text-nowrap logo-img">
                         <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -65,19 +65,19 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
+                            <a class="sidebar-link" asp-page="/ManagerPages/RoomManager" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-alert-circle"></i>
                                 </span>
-                                <span class="hide-menu">Alerts</span>
+                                <span class="hide-menu">Room Manager</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
+                            <a class="sidebar-link" asp-page="/ManagerPages/ListBookRequestManager" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-cards"></i>
                                 </span>
-                                <span class="hide-menu">Card</span>
+                                <span class="hide-menu">Book Request Manager</span>
                             </a>
                         </li>
                         
@@ -152,6 +152,8 @@
             </div>
         </div>
     </div>
+    @RenderSection("ScriptSection", required: false);
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/sidebarmenu.js"></script>

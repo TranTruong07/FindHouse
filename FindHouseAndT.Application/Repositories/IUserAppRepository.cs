@@ -11,7 +11,7 @@ namespace FindHouseAndT.Application.Repositories
     {
         Task CreateUserAppAsync(UserApp userApp);
         Task UpdateUserAppAsync(UserApp userApp);
-        Task<IEnumerable<UserApp>> GetAllUserAppAsync();
+        Task<List<UserApp>> GetAllUserAppAsync();
         Task<UserApp?> GetUserAppByIdAsync(Guid id);
     }
 }

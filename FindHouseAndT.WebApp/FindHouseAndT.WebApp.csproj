@@ -18,8 +18,4 @@
     <ProjectReference Include="..\FindHouseAndT.Infrastructure\FindHouseAndT.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\CustomerPages\CustomerView\" />
-  </ItemGroup>
-
 </Project>

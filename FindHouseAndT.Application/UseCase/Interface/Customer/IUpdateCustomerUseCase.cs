@@ -4,6 +4,6 @@ namespace FindHouseAndT.Application.UseCase
 {
 	public interface IUpdateCustomerUseCase
 	{
-		Task<bool> ExecuteAsync(Customer customer);
+		Task ExecuteAsync(Customer customer);
 	}
 }

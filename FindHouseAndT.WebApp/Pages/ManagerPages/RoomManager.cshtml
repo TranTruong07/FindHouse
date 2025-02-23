@@ -1,0 +1,175 @@
+﻿@page
+@model FindHouseAndT.WebApp.Pages.ManagerPages.RoomManagerModel
+@{
+	Layout = "_ManagerLayout";
+}
+@section StyleSection {
+	<style>
+		.modal-backdrop {
+			z-index: 150 !important;
+		}
+	</style>
+}
+@{
+    var motels = ViewData["Motels"] as SelectList;
+}
+<div class="container">
+    <div class="position-relative" style="height: 50px;">
+        <div class="position-absolute top-0 end-0 m-2">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMotelModal">Add/Update</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addMotelModal" tabindex="-1" role="dialog" aria-labelledby="addMotelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMotelModalLabel">Add New Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form thêm Motel -->
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="RoomManagerDTO.OldRoomCode"  id="OldRoomCode">
+                        <input type="hidden" asp-for="RoomManagerDTO.Id"  id="IdRoom">
+                        <div class="form-group">
+                            <label for="motelName">Code Room</label>
+                            <input asp-for="RoomManagerDTO.RoomCode" class="form-control" id="RoomCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelAddress">Number of Floor</label>
+                            <input asp-for="RoomManagerDTO.Floor" class="form-control" id="Floor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelQuantityRoom">Area</label>
+                            <input asp-for="RoomManagerDTO.Area" class="form-control" id="Area" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelDescription1">Description1</label>
+                            <input asp-for="RoomManagerDTO.Description1" class="form-control" id="motelDescription1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelDescription2">Description2 (Optional)</label>
+                            <input asp-for="RoomManagerDTO.Description2" class="form-control" id="motelDescription2">
+                        </div>
+                        <div class="form-group">
+                            <label for="motelDescription2">Price</label>
+                            <input asp-for="RoomManagerDTO.Price" class="form-control" id="Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="motelSelection">Select Motel</label>
+                            
+                            <select id="selectMotel" asp-for="RoomManagerDTO.IdMotel" class="form-control" asp-items="@motels">
+                                <option value="">-- Select Motel --</option>
+                            </select>
+                            <span asp-validation-for="RoomManagerDTO.IdMotel" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="motelKeyImage">Image Room</label>
+                            <input type="file" asp-for="RoomManagerDTO.ImageRoom" class="form-control" id="motelKeyImage">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <select id="motelSelect" asp-for="RoomManagerDTO.IdMotel" class="form-control" asp-items="@motels">
+            <option value="">-- Select Motel --</option>
+        </select>
+    </div>
+    <div class="row">
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Code Room</th>
+                    <th>Number of Floor</th>
+                    <th>Area</th>
+                    <th>Status Room</th>
+                    <th>Description1</th>
+                    <th>Description2</th>
+                    <th>Price</th>
+                    <th>Image Room</th>
+                </tr>
+            </thead>
+            <tbody id="roomTableBody">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section ScriptSection {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#motelSelect').change(function () {
+                var motelId = $(this).val();
+                if (motelId) {
+                    $.ajax({
+                        url: '/ManagerPages/RoomManager?handler=LoadRoom', // Đường dẫn đến action lấy dữ liệu
+                        type: 'GET',
+                        data: { MotelId: motelId }, // Gửi idMotel tới server
+                        success: function (response) {
+                            $('#roomTableBody').html(''); // Xóa nội dung hiện tại của tbody
+
+                            // Thêm dữ liệu trả về từ server vào tbody
+                            $.each(response, function (index, room) {
+                                $('#roomTableBody').append('<tr>' +
+                                    '<td><input type="checkbox" class="select-room" value="'+ motelId+'"></td>' +
+                                    '<td>' + room.id + '</td>' +
+                                    '<td>' + room.roomCode + '</td>' +
+                                    '<td>' + room.floor + '</td>' +
+                                    '<td>' + room.area + '</td>' +
+                                    '<td>' + room.status + '</td>' +
+                                    '<td>' + room.description1 + '</td>' +
+                                    '<td>' + room.description2 + '</td>' +
+                                    '<td>' + room.price + '</td>' +
+                                    '<td><img src="' + room.urlImageRoom + '" alt="Room Image" style="width: 100px;"></td>' +
+                                    '</tr>');
+                            });
+                        },
+                        error: function () {
+                            console.log(xhr.responseText);
+                            alert("Error loading rooms. Please try again.");
+                        }
+                    });
+                } else {
+                    $('#roomData').html(''); // Nếu không chọn motel nào, làm sạch tbody
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#roomTableBody').on('change', '.select-room', function () {
+            if (this.checked) {
+                var row = this.closest('tr');
+
+                var id = row.cells[1].innerText;
+                var roomCode = row.cells[2].innerText;
+                var floor = row.cells[3].innerText;
+                var area = row.cells[4].innerText;
+                var description1 = row.cells[6].innerText;
+                var description2 = row.cells[7].innerText;
+                var price = row.cells[8].innerText;
+                var motelId = this.value;
+
+                // Điền dữ liệu vào form
+                document.getElementById('RoomCode').value = roomCode;
+                document.getElementById('Floor').value = floor;
+                document.getElementById('Area').value = area;
+                document.getElementById('motelDescription1').value = description1;
+                document.getElementById('motelDescription2').value = description2;
+                document.getElementById('Price').value = price;
+                document.getElementById('selectMotel').value = motelId;
+                document.getElementById('OldRoomCode').value = roomCode;
+                document.getElementById('IdRoom').value = id;
+            }
+        });
+    </script>
+}

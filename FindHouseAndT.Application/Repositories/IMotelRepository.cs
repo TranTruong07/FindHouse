@@ -4,10 +4,10 @@ namespace FindHouseAndT.Application.Repositories
 {
     public interface IMotelRepository
     {
-        public Task CreateMotelAsync(Motel motel);
-        public Task UpdateMotelAsync(Motel motel);
-        public Task<IEnumerable<Motel>> GetAllMotelAsync();
-        public Motel? GetMotelByIdAsync(Guid id);
-        public Task DeleteMotelAsync(Motel motel);
+        Task CreateMotelAsync(Motel motel);
+        void UpdateMotel(Motel motel);
+        Task<List<Motel>> GetAllMotelAsync();
+        Motel? GetMotelById(Guid id);
+        Task DeleteMotelAsync(Motel motel);
     }
 }

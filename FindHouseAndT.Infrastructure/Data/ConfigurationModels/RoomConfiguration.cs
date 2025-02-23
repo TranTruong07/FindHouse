@@ -8,11 +8,13 @@ namespace FindHouseAndT.Infrastructure.Data.ConfigurationModels
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.HasKey(x => x.IdRoom);
+            builder.HasKey(x => x.ID);
+            builder.HasIndex(x => new {x.RoomCode, x.IdMotel}).IsUnique();
             builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
             builder.Property(x => x.Status).HasColumnType("varchar(200)");
             builder.HasOne(x => x.Motel).WithMany(x => x.Rooms).HasForeignKey(x => x.IdMotel).OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(x => x.Orders).WithOne(x => x.Room).HasForeignKey(x => x.IdRoom).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.Contracts).WithOne(x => x.Room).HasForeignKey(x => x.IdRoom).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.BookRequests).WithOne(x => x.Room).HasForeignKey(x => x.RoomId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

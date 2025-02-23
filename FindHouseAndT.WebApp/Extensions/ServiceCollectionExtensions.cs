@@ -1,15 +1,11 @@
-﻿using FindHouseAndT.Application.Repositories;
+﻿using FindHouseAndT.Application.ExternalInterface;
+using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Application.Services;
-using FindHouseAndT.Application.Services.Common;
 using FindHouseAndT.Application.UnitOfWork;
 using FindHouseAndT.Application.UseCase;
-using FindHouseAndT.Application.UseCase.Implement.Common;
-using FindHouseAndT.Application.UseCase.Interface.HouseOwner;
-using FindHouseAndT.Application.UseCase.Interface.UserApp;
-using FindHouseAndT.Infrastructure.Data.MailService;
 using FindHouseAndT.Infrastructure.Data.Repositories;
 using FindHouseAndT.Infrastructure.Data.UnitOfWork;
-using FindHouseAndT.Models.MailKit;
+using FindHouseAndT.Infrastructure.ExternalServices;
 
 namespace FindHouseAndT.WebApp.Extensions
 {
@@ -26,27 +22,44 @@ namespace FindHouseAndT.WebApp.Extensions
             services.AddScoped<IUpdateCustomerUseCase, UpdateCustomerUseCase>();
 
             // UseCase Common
-            services.AddScoped<IAWSUploadImageUseCase, AWSUploadImageUseCase>();
-            services.AddScoped<IGetPreSignedUrlUseCase, GetPreSignedUrlUseCase>();
+
 
             // UseCase Motel
             services.AddScoped<ICreateMotelUseCase,  CreateMotelUseCase>();
 			services.AddScoped<IGetMotelByIdUseCase, GetMotelByIdUseCase>();
+			services.AddScoped<IGetAllMotelUseCase, GetAllMotelUseCase>();
+			services.AddScoped<IUpdateMotelUseCase, UpdateMotelUseCase>();
 
+			// UseCase Room
+			services.AddScoped<ICreateNewRoomUseCase,  CreateNewRoomUseCase>();
+            services.AddScoped<IGetAllRoomsByMotelIdUseCase,  GetAllRoomsByMotelIdUseCase>();
+            services.AddScoped<IGetRoomByRoomCodeAndIdMotelUseCase, GetRoomByRoomCodeAndIdMotelUseCase>();
+            services.AddScoped<IUpdateRoomUseCase, UpdateRoomUseCase>();
+            services.AddScoped<IGetRoomByIdUseCase, GetRoomByIdUseCase>();
+
+            // UseCase BookRequest
+            services.AddScoped<ICreateBookRequestUseCase,  CreateBookRequestUseCase>();
+            services.AddScoped<IGetBookRequestByCustomerIdUseCase, GetBookRequestByCustomerIdUseCase>();
+            services.AddScoped<IGetAllBookRequestUseCase, GetAllBookRequestUseCase>();
+            services.AddScoped<IGetBookRequestByIdUseCase, GetBookRequestByIdUseCase>();
+            services.AddScoped<IUpdateBookRequestUseCase, UpdateBookRequestUseCase>();
 
 			// Service
-			services.AddScoped<MotelService>();
-            services.AddScoped<CustomerService>();
-            services.AddScoped<AWSService>();
-            services.AddTransient<IMailService, MailService>();
+			services.AddScoped<IMotelService, MotelService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IFileStorageService, AWSFileStorageService>();
+            services.AddTransient<IEmailService, MailService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IBookRequestService, BookRequestService>();
 
             //repository
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IUserAppRepository, UserAppRepository>();
             services.AddScoped<IMotelRepository, MotelRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IContractRepository, ContractRepository>();
             services.AddScoped<IHouseOwnerRepository, HouseOwnerRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IBookRequestRepository, BookRequestRepository>();
             return services;
         }
     }

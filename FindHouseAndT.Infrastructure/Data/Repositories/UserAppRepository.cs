@@ -1,10 +1,5 @@
 ﻿using FindHouseAndT.Application.Repositories;
 using FindHouseAndT.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindHouseAndT.Infrastructure.Data.Repositories
 {
@@ -15,7 +10,7 @@ namespace FindHouseAndT.Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserApp>> GetAllUserAppAsync()
+        public Task<List<UserApp>> GetAllUserAppAsync()
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,8 @@ namespace FindHouseAndT.Models.Entities
 {
     public class Room
     {
-        public Guid IdRoom { get; set; }
+        public int ID { get; set; }
+        public required string RoomCode { get; set; }
         public int Floor {  get; set; }
         public double Area { get; set; }
         public decimal Price { get; set; }
@@ -13,6 +14,7 @@ namespace FindHouseAndT.Models.Entities
 		public required string KeyImageRoom { get; set; }
 		public Guid IdMotel { get; set; }
         public Motel? Motel { get; set; }
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
+        public ICollection<BookRequest> BookRequests { get; set; } = new List<BookRequest>();
     }
 }

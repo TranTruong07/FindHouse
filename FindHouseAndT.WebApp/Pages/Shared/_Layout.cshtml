@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="~/css/animate.css">
 	<link rel="stylesheet" href="~/css/slicknav.css">
 	<link rel="stylesheet" href="~/css/style.css">
-
+	@RenderSection("StyleSection", required: false)
 </head>
 <body>
 	<!-- header-start -->
@@ -36,7 +36,7 @@
 							<div class="main-menu  d-none d-lg-block">
 								<nav>
 									<ul id="navigation">
-										<li><a class="active" href="index.html">home</a></li>
+										<li><a class="active" asp-page="/CustomerPages/CommonView/Index">home</a></li>
 										<li><a href="rooms.html">rooms</a></li>
 										<li><a href="about.html">About</a></li>
 										<li>
@@ -52,7 +52,15 @@
 												<li><a href="elements.html">elements</a></li>
 											</ul>
 										</li>
-										<li><a href="contact.html">Contact</a></li>
+										<li>
+											@if (signInManager.IsSignedIn(User))
+											{
+												if (User.IsInRole(UserRole.Customer))
+												{
+													<a asp-page="/CustomerPages/CustomerView/ListBookRequest">Book Requests</a>
+												}
+											}
+										</li>
 									</ul>
 								</nav>
 							</div>
@@ -93,23 +101,23 @@
 											<a asp-page="/ManagerPages/HomeManager">Manager Motel</a>
 										</div>
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+											<a asp-page="/CustomerPages/CommonView/UserManager" asp-page-handler="SignOut">Sign Out</a>
 										</div>
 									}
 									else
 									{
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/ProfileUser">User</a>
+											<a asp-page="/CustomerPages/CustomerView/ProfileUser">User</a>
 										</div>
 										<div class="book_btn d-none d-lg-block">
-											<a asp-page="CustomerPages/CustomerView/UserManager" asp-page-handler="SignOut">Sign Out</a>
+											<a asp-page="/CustomerPages/CommonView/UserManager" asp-page-handler="SignOut">Sign Out</a>
 										</div>
 									}
 								}
 								else
 								{
 									<div class="book_btn d-none d-lg-block">
-										<a asp-page="CustomerPages/CustomerView/UserManager">Login/Register</a>
+										<a asp-page="/CustomerPages/CommonView/UserManager">Login/Register</a>
 									</div>
 								}
 
@@ -272,7 +280,7 @@
 			</div>
 		</div>
 	</footer>
-
+	@RenderSection("ScriptSection", required: false);
 	<!-- JS here -->
 	<script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
 	<script src="~/js/vendor/jquery-1.12.4.min.js"></script>
@@ -302,6 +310,6 @@
 
 	<script src="~/js/main.js"></script>
 
-	@await RenderSectionAsync("Scripts", required: false)
+	
 </body>
 </html>

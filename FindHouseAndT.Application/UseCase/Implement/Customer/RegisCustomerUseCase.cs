@@ -12,10 +12,10 @@ namespace FindHouseAndT.Application.UseCase
             _repository = repository;
         }
 
-        public async Task<bool> ExecuteAsync(Customer customer)
+        public Task ExecuteAsync(Customer customer)
         {
-            await _repository.CreateCustomerAsync(customer);
-            return true;
+            _repository.CreateCustomerAsync(customer);
+            return Task.CompletedTask;
         }
     }
 }

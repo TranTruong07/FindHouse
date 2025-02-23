@@ -12,9 +12,9 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 	{
 		private readonly SignInManager<UserApp> _signInManager;
 		private readonly UserManager<UserApp> _userManager;
-		private readonly CustomerService _customerService;
+		private readonly ICustomerService _customerService;
 
-		public ExternalLoginCallBackModel(SignInManager<UserApp> signInManager, UserManager<UserApp> userManager, CustomerService customerService)
+		public ExternalLoginCallBackModel(SignInManager<UserApp> signInManager, UserManager<UserApp> userManager, ICustomerService customerService)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
@@ -26,26 +26,26 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 			var infor = await _signInManager.GetExternalLoginInfoAsync();
 			if (infor == null)
 			{
-				return RedirectToPage("/CustomerPages/CustomerView/UserManager");
+				return RedirectToPage("/CustomerPages/CommonView/UserManager");
 			}
 			var signInResult = await _signInManager.ExternalLoginSignInAsync(infor.LoginProvider, infor.ProviderKey, isPersistent: false);
 			if (signInResult.Succeeded)
 			{
-				return RedirectToPage("/Index");
+				return RedirectToPage("/CustomerPages/CommonView/Index");
 			}
 			else
 			{
 				var email = infor.Principal.FindFirstValue(ClaimTypes.Email);
 				if (email == null)
 				{
-					return RedirectToPage("/CustomerPages/CustomerView/UserManager");
+					return RedirectToPage("/CustomerPages/CommonView/UserManager");
 				}
 				var getUser = await _userManager.FindByEmailAsync(email);
 				if (getUser != null)
 				{
 					await _userManager.AddLoginAsync(getUser, infor);
 					await _signInManager.SignInAsync(getUser, isPersistent: false);
-					return RedirectToPage("/Index");
+					return RedirectToPage("/CustomerPages/CommonView/Index");
 				}
 				var user = new UserApp()
 				{
@@ -60,13 +60,13 @@ namespace FindHouseAndT.WebApp.Pages.CustomerPages
 					var customer = new Customer() {IdUser = user.Id, Name = user.Email };
 					var addCustomerResult = await _customerService.Register(customer);
 					var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Customer);
-					if (addLoginResult.Succeeded && addCustomerResult && addToRoleResult.Succeeded)
+					if (addLoginResult.Succeeded && addCustomerResult.ResultCode == ResultCode.Success && addToRoleResult.Succeeded)
 					{
 						await _signInManager.SignInAsync(user, isPersistent: false);
-						return RedirectToPage("/Index");
+						return RedirectToPage("/CustomerPages/CommonView/Index");
 					}
                 }
-				return RedirectToPage("/CustomerPages/CustomerView/UserManager");
+				return RedirectToPage("/CustomerPages/CommonView/UserManager");
 			}
 		}
 	}

@@ -4,6 +4,6 @@ namespace FindHouseAndT.Application.UseCase
 {
     public interface IGetMotelByIdUseCase
     {
-        Motel? ExecuteAsync(Guid id);
+        Motel? Execute(Guid id);
     }
 }
